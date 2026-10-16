@@ -1,0 +1,562 @@
+{
+  "dataRoles": [
+    {
+      "displayName": "Measurement",
+      "name": "meting",
+      "kind": "GroupingOrMeasure"
+    },
+    {
+      "displayName": "Frequency",
+      "name": "frequency",
+      "kind": "Grouping"
+    },
+    {
+      "displayName": "DnT/LnT",
+      "name": "dnT",
+      "kind": "GroupingOrMeasure"
+    },
+    {
+      "displayName": "DnT,A/LnT,A",
+      "name": "dnTA",
+      "kind": "GroupingOrMeasure"
+    },
+    {
+      "displayName": "DnT,A;k (verblijfsruimte)",
+      "name": "dnTAKVerblijfsruimte",
+      "kind": "GroupingOrMeasure"
+    },
+    {
+      "displayName": "DnT,A;k (verblijfsgebied)",
+      "name": "dnTAKVerblijfsgebied",
+      "kind": "GroupingOrMeasure"
+    },
+    {
+      "displayName": "Kolommen tonen",
+      "name": "columnVisibility",
+      "kind": "Grouping"
+    },
+    {
+      "displayName": "Details DnT/LnT",
+      "name": "detail",
+      "kind": "GroupingOrMeasure"
+    },
+    {
+      "displayName": "Extra measurement details",
+      "name": "measurementDetails",
+      "kind": "GroupingOrMeasure"
+    },
+    {
+      "displayName": "Rapport details",
+      "name": "topDetails",
+      "kind": "GroupingOrMeasure"
+    },
+    {
+      "displayName": "Waarschuwingen",
+      "name": "warning",
+      "kind": "GroupingOrMeasure"
+    }
+  ],
+  "supportsMultiVisualSelection": true,
+  "tooltips": {
+    "supportedTypes": {
+      "default": true
+    }
+  },
+  "objects": {
+    "windowTitleBars": {
+      "displayName": "Titelbalken",
+      "properties": {
+        "windowTitleLineHeight": { "type": { "numeric": true } },
+        "windowTitleVerticalPadding": { "type": { "numeric": true } },
+        "windowTitleHorizontalPadding": { "type": { "numeric": true } }
+      }
+    },
+    "visualState": {
+      "displayName": "Visual state",
+      "properties": {
+        "showDnTOverview": { "type": { "bool": true } },
+        "showReportTable": { "type": { "bool": true } },
+        "showTopPanel": { "type": { "bool": true } },
+        "reportViewActive": { "type": { "bool": true } },
+        "analysisViewActive": { "type": { "bool": true } },
+        "showGraphPlaceholder": { "type": { "bool": true } },
+        "showGraphSettingsPanel": { "type": { "bool": true } },
+        "graphSettingsOpen": { "type": { "bool": true } },
+        "debugTableVisible": { "type": { "bool": true } },
+        "graphFrequencyMode": { "type": { "text": true } },
+        "graphFrequencyStart": { "type": { "numeric": true } },
+        "graphFrequencyEnd": { "type": { "numeric": true } }
+      }
+    },
+    "topWindowColumns": {
+      "displayName": "Bovenvenster - Kolommen",
+      "properties": {
+        "topSelectedColumn": { "type": { "enumeration": [
+          { "displayName": "Meting", "value": "measurement" }, { "displayName": "Omschrijving", "value": "description" },
+          { "displayName": "Toelichting", "value": "toelichting" }
+        ] } },
+        "topMeasurementFontFamily": { "type": { "text": true } }, "topMeasurementFontSize": { "type": { "numeric": true } }, "topMeasurementBold": { "type": { "bool": true } }, "topMeasurementItalic": { "type": { "bool": true } }, "topMeasurementUnderline": { "type": { "bool": true } }, "topMeasurementColor": { "type": { "fill": { "solid": { "color": true } } } }, "topMeasurementBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topMeasurementHeaderBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topMeasurementAlignment": { "type": { "text": true } },
+        "topDescriptionFontFamily": { "type": { "text": true } }, "topDescriptionFontSize": { "type": { "numeric": true } }, "topDescriptionBold": { "type": { "bool": true } }, "topDescriptionItalic": { "type": { "bool": true } }, "topDescriptionUnderline": { "type": { "bool": true } }, "topDescriptionColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDescriptionBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDescriptionHeaderBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDescriptionAlignment": { "type": { "text": true } },
+        "topToelichtingFontFamily": { "type": { "text": true } }, "topToelichtingFontSize": { "type": { "numeric": true } }, "topToelichtingBold": { "type": { "bool": true } }, "topToelichtingItalic": { "type": { "bool": true } }, "topToelichtingUnderline": { "type": { "bool": true } }, "topToelichtingColor": { "type": { "fill": { "solid": { "color": true } } } }, "topToelichtingBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topToelichtingHeaderBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topToelichtingAlignment": { "type": { "text": true } },
+        "topDetail0FontFamily": { "type": { "text": true } }, "topDetail0FontSize": { "type": { "numeric": true } }, "topDetail0Bold": { "type": { "bool": true } }, "topDetail0Italic": { "type": { "bool": true } }, "topDetail0Underline": { "type": { "bool": true } }, "topDetail0Color": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail0BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail0HeaderBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail0Alignment": { "type": { "text": true } },
+        "topDetail1FontFamily": { "type": { "text": true } }, "topDetail1FontSize": { "type": { "numeric": true } }, "topDetail1Bold": { "type": { "bool": true } }, "topDetail1Italic": { "type": { "bool": true } }, "topDetail1Underline": { "type": { "bool": true } }, "topDetail1Color": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail1BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail1HeaderBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail1Alignment": { "type": { "text": true } },
+        "topDetail2FontFamily": { "type": { "text": true } }, "topDetail2FontSize": { "type": { "numeric": true } }, "topDetail2Bold": { "type": { "bool": true } }, "topDetail2Italic": { "type": { "bool": true } }, "topDetail2Underline": { "type": { "bool": true } }, "topDetail2Color": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail2BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail2HeaderBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail2Alignment": { "type": { "text": true } },
+        "topDetail3FontFamily": { "type": { "text": true } }, "topDetail3FontSize": { "type": { "numeric": true } }, "topDetail3Bold": { "type": { "bool": true } }, "topDetail3Italic": { "type": { "bool": true } }, "topDetail3Underline": { "type": { "bool": true } }, "topDetail3Color": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail3BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail3HeaderBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail3Alignment": { "type": { "text": true } },
+        "topDetail4FontFamily": { "type": { "text": true } }, "topDetail4FontSize": { "type": { "numeric": true } }, "topDetail4Bold": { "type": { "bool": true } }, "topDetail4Italic": { "type": { "bool": true } }, "topDetail4Underline": { "type": { "bool": true } }, "topDetail4Color": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail4BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail4HeaderBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail4Alignment": { "type": { "text": true } },
+        "topDetail5FontFamily": { "type": { "text": true } }, "topDetail5FontSize": { "type": { "numeric": true } }, "topDetail5Bold": { "type": { "bool": true } }, "topDetail5Italic": { "type": { "bool": true } }, "topDetail5Underline": { "type": { "bool": true } }, "topDetail5Color": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail5BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail5HeaderBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail5Alignment": { "type": { "text": true } },
+        "topDetail6FontFamily": { "type": { "text": true } }, "topDetail6FontSize": { "type": { "numeric": true } }, "topDetail6Bold": { "type": { "bool": true } }, "topDetail6Italic": { "type": { "bool": true } }, "topDetail6Underline": { "type": { "bool": true } }, "topDetail6Color": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail6BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail6HeaderBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail6Alignment": { "type": { "text": true } },
+        "topDetail7FontFamily": { "type": { "text": true } }, "topDetail7FontSize": { "type": { "numeric": true } }, "topDetail7Bold": { "type": { "bool": true } }, "topDetail7Italic": { "type": { "bool": true } }, "topDetail7Underline": { "type": { "bool": true } }, "topDetail7Color": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail7BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail7HeaderBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail7Alignment": { "type": { "text": true } },
+        "topDetail8FontFamily": { "type": { "text": true } }, "topDetail8FontSize": { "type": { "numeric": true } }, "topDetail8Bold": { "type": { "bool": true } }, "topDetail8Italic": { "type": { "bool": true } }, "topDetail8Underline": { "type": { "bool": true } }, "topDetail8Color": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail8BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail8HeaderBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail8Alignment": { "type": { "text": true } },
+        "topDetail9FontFamily": { "type": { "text": true } }, "topDetail9FontSize": { "type": { "numeric": true } }, "topDetail9Bold": { "type": { "bool": true } }, "topDetail9Italic": { "type": { "bool": true } }, "topDetail9Underline": { "type": { "bool": true } }, "topDetail9Color": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail9BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail9HeaderBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "topDetail9Alignment": { "type": { "text": true } }
+      }
+    },
+    "topWindowLines": {
+      "displayName": "Bovenvenster - Lijnen",
+      "properties": {
+        "topWindowHorizontalLineColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "topWindowHorizontalLineWidth": { "type": { "numeric": true } },
+        "topWindowVerticalLineColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "topWindowVerticalLineWidth": { "type": { "numeric": true } }
+      }
+    },
+    "windowLines": {
+      "displayName": "Vensterlijnen",
+      "properties": {
+        "reportWindowLineVisible": { "type": { "bool": true } }, "reportWindowLineColor": { "type": { "fill": { "solid": { "color": true } } } }, "reportWindowLineWidth": { "type": { "numeric": true } },
+        "graphWindowLineVisible": { "type": { "bool": true } }, "graphWindowLineColor": { "type": { "fill": { "solid": { "color": true } } } }, "graphWindowLineWidth": { "type": { "numeric": true } },
+        "tableWindowLineVisible": { "type": { "bool": true } }, "tableWindowLineColor": { "type": { "fill": { "solid": { "color": true } } } }, "tableWindowLineWidth": { "type": { "numeric": true } },
+        "sideWindowLineVisible": { "type": { "bool": true } }, "sideWindowLineColor": { "type": { "fill": { "solid": { "color": true } } } }, "sideWindowLineWidth": { "type": { "numeric": true } }
+      }
+    },
+    "reportStyle": {
+      "displayName": "Rapport",
+      "properties": {
+        "rowHeight": { "type": { "numeric": true } },
+        "reportTitleText": { "type": { "text": true } },
+        "reportTitleFontFamily": { "type": { "text": true } },
+        "reportTitleFontSize": { "type": { "numeric": true } },
+        "reportTitleBold": { "type": { "bool": true } },
+        "reportTitleItalic": { "type": { "bool": true } },
+        "reportTitleUnderline": { "type": { "bool": true } },
+        "reportTitleColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "reportTitleBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "frequencyColumnWidth": { "type": { "numeric": true } },
+        "measurementColumnWidth": { "type": { "numeric": true } },
+        "octaveBandLineColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "octaveBandLineWidth": { "type": { "numeric": true } },
+        "resultRowLineColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "resultRowLineWidth": { "type": { "numeric": true } },
+        "reportVerticalLineColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "reportVerticalLineWidth": { "type": { "numeric": true } },
+        "selectedReportRow": { "type": { "enumeration": [
+          { "displayName": "Frequentie", "value": "frequency" },
+          { "displayName": "Metingen", "value": "measurement" },
+          { "displayName": "DnT,A", "value": "dnTA" },
+          { "displayName": "DnT,A;k VR", "value": "dnTAKRoom" },
+          { "displayName": "DnT,A;k VG", "value": "dnTAKArea" }
+        ] } },
+        "reportDecimals": { "type": { "numeric": true } },
+        "reportFrequencyFontFamily": { "type": { "text": true } },
+        "reportFrequencyFontSize": { "type": { "numeric": true } },
+        "reportFrequencyBold": { "type": { "bool": true } },
+        "reportFrequencyItalic": { "type": { "bool": true } },
+        "reportFrequencyUnderline": { "type": { "bool": true } },
+        "reportFrequencyColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "reportFrequencyBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "reportFrequencyAlignment": { "type": { "text": true } },
+        "reportMeasurementFontFamily": { "type": { "text": true } },
+        "reportMeasurementFontSize": { "type": { "numeric": true } },
+        "reportMeasurementBold": { "type": { "bool": true } },
+        "reportMeasurementItalic": { "type": { "bool": true } },
+        "reportMeasurementUnderline": { "type": { "bool": true } },
+        "reportMeasurementColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "reportMeasurementBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "reportMeasurementAlignment": { "type": { "text": true } },
+        "reportDnTAFontFamily": { "type": { "text": true } }, "reportDnTAFontSize": { "type": { "numeric": true } }, "reportDnTABold": { "type": { "bool": true } }, "reportDnTAItalic": { "type": { "bool": true } }, "reportDnTAUnderline": { "type": { "bool": true } }, "reportDnTAColor": { "type": { "fill": { "solid": { "color": true } } } }, "reportDnTABackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "reportDnTAAlignment": { "type": { "text": true } },
+        "reportDnTAKRoomFontFamily": { "type": { "text": true } }, "reportDnTAKRoomFontSize": { "type": { "numeric": true } }, "reportDnTAKRoomBold": { "type": { "bool": true } }, "reportDnTAKRoomItalic": { "type": { "bool": true } }, "reportDnTAKRoomUnderline": { "type": { "bool": true } }, "reportDnTAKRoomColor": { "type": { "fill": { "solid": { "color": true } } } }, "reportDnTAKRoomBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "reportDnTAKRoomAlignment": { "type": { "text": true } },
+        "reportDnTAKAreaFontFamily": { "type": { "text": true } }, "reportDnTAKAreaFontSize": { "type": { "numeric": true } }, "reportDnTAKAreaBold": { "type": { "bool": true } }, "reportDnTAKAreaItalic": { "type": { "bool": true } }, "reportDnTAKAreaUnderline": { "type": { "bool": true } }, "reportDnTAKAreaColor": { "type": { "fill": { "solid": { "color": true } } } }, "reportDnTAKAreaBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "reportDnTAKAreaAlignment": { "type": { "text": true } }
+      }
+    },
+    "generalStyle": {
+      "displayName": "General",
+      "properties": {
+        "titleVisible": { "type": { "bool": true } },
+        "titleText": { "type": { "text": true } },
+        "titleFontFamily": { "type": { "text": true } },
+        "titleFontSize": { "type": { "numeric": true } },
+        "titleBold": { "type": { "bool": true } },
+        "titleColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "decimals": { "type": { "numeric": true } }
+      }
+    },
+    "tableFormatting": {
+      "displayName": "Tabel",
+      "properties": {
+        "titleText": { "type": { "text": true } },
+        "fontFamily": { "type": { "text": true } },
+        "fontSize": { "type": { "numeric": true } },
+        "bold": { "type": { "bool": true } },
+        "italic": { "type": { "bool": true } },
+        "underline": { "type": { "bool": true } },
+        "color": { "type": { "fill": { "solid": { "color": true } } } },
+        "backgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "headerRowPadding": { "type": { "numeric": true } },
+        "measurementRowPadding": { "type": { "numeric": true } },
+        "detailRowPadding": { "type": { "numeric": true } },
+        "selectedColumn": { "type": { "enumeration": [
+          { "displayName": "Measurement 1", "value": "label0" }, { "displayName": "Measurement 2", "value": "label1" },
+          { "displayName": "Measurement 3", "value": "label2" }, { "displayName": "Measurement 4", "value": "label3" },
+          { "displayName": "Measurement 5", "value": "label4" }, { "displayName": "Measurement 6", "value": "label5" },
+          { "displayName": "Measurement 7", "value": "label6" }, { "displayName": "Measurement 8", "value": "label7" },
+          { "displayName": "Measurement 9", "value": "label8" }, { "displayName": "Measurement 10", "value": "label9" },
+          { "displayName": "Info", "value": "info" },
+          { "displayName": "DnT,A", "value": "dnTA" }, { "displayName": "DnT,A;k verblijfsruimte", "value": "dnTAKRoom" },
+          { "displayName": "DnT,A;k verblijfsgebied", "value": "dnTAKArea" }, { "displayName": "Frequenties", "value": "frequency" }
+        ] } },
+        "label0Alignment": { "type": { "text": true } }, "label0ColumnName": { "type": { "text": true } }, "label0FontFamily": { "type": { "text": true } }, "label0FontSize": { "type": { "numeric": true } }, "label0Bold": { "type": { "bool": true } }, "label0Italic": { "type": { "bool": true } }, "label0Underline": { "type": { "bool": true } }, "label0Color": { "type": { "fill": { "solid": { "color": true } } } }, "label0BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "label1Alignment": { "type": { "text": true } }, "label1ColumnName": { "type": { "text": true } }, "label1FontFamily": { "type": { "text": true } }, "label1FontSize": { "type": { "numeric": true } }, "label1Bold": { "type": { "bool": true } }, "label1Italic": { "type": { "bool": true } }, "label1Underline": { "type": { "bool": true } }, "label1Color": { "type": { "fill": { "solid": { "color": true } } } }, "label1BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "label2Alignment": { "type": { "text": true } }, "label2ColumnName": { "type": { "text": true } }, "label2FontFamily": { "type": { "text": true } }, "label2FontSize": { "type": { "numeric": true } }, "label2Bold": { "type": { "bool": true } }, "label2Italic": { "type": { "bool": true } }, "label2Underline": { "type": { "bool": true } }, "label2Color": { "type": { "fill": { "solid": { "color": true } } } }, "label2BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "label3Alignment": { "type": { "text": true } }, "label3ColumnName": { "type": { "text": true } }, "label3FontFamily": { "type": { "text": true } }, "label3FontSize": { "type": { "numeric": true } }, "label3Bold": { "type": { "bool": true } }, "label3Italic": { "type": { "bool": true } }, "label3Underline": { "type": { "bool": true } }, "label3Color": { "type": { "fill": { "solid": { "color": true } } } }, "label3BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "label4Alignment": { "type": { "text": true } }, "label4ColumnName": { "type": { "text": true } }, "label4FontFamily": { "type": { "text": true } }, "label4FontSize": { "type": { "numeric": true } }, "label4Bold": { "type": { "bool": true } }, "label4Italic": { "type": { "bool": true } }, "label4Underline": { "type": { "bool": true } }, "label4Color": { "type": { "fill": { "solid": { "color": true } } } }, "label4BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "label5Alignment": { "type": { "text": true } }, "label5ColumnName": { "type": { "text": true } }, "label5FontFamily": { "type": { "text": true } }, "label5FontSize": { "type": { "numeric": true } }, "label5Bold": { "type": { "bool": true } }, "label5Italic": { "type": { "bool": true } }, "label5Underline": { "type": { "bool": true } }, "label5Color": { "type": { "fill": { "solid": { "color": true } } } }, "label5BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "label6Alignment": { "type": { "text": true } }, "label6ColumnName": { "type": { "text": true } }, "label6FontFamily": { "type": { "text": true } }, "label6FontSize": { "type": { "numeric": true } }, "label6Bold": { "type": { "bool": true } }, "label6Italic": { "type": { "bool": true } }, "label6Underline": { "type": { "bool": true } }, "label6Color": { "type": { "fill": { "solid": { "color": true } } } }, "label6BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "label7Alignment": { "type": { "text": true } }, "label7ColumnName": { "type": { "text": true } }, "label7FontFamily": { "type": { "text": true } }, "label7FontSize": { "type": { "numeric": true } }, "label7Bold": { "type": { "bool": true } }, "label7Italic": { "type": { "bool": true } }, "label7Underline": { "type": { "bool": true } }, "label7Color": { "type": { "fill": { "solid": { "color": true } } } }, "label7BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "label8Alignment": { "type": { "text": true } }, "label8ColumnName": { "type": { "text": true } }, "label8FontFamily": { "type": { "text": true } }, "label8FontSize": { "type": { "numeric": true } }, "label8Bold": { "type": { "bool": true } }, "label8Italic": { "type": { "bool": true } }, "label8Underline": { "type": { "bool": true } }, "label8Color": { "type": { "fill": { "solid": { "color": true } } } }, "label8BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "label9Alignment": { "type": { "text": true } }, "label9ColumnName": { "type": { "text": true } }, "label9FontFamily": { "type": { "text": true } }, "label9FontSize": { "type": { "numeric": true } }, "label9Bold": { "type": { "bool": true } }, "label9Italic": { "type": { "bool": true } }, "label9Underline": { "type": { "bool": true } }, "label9Color": { "type": { "fill": { "solid": { "color": true } } } }, "label9BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "infoAlignment": { "type": { "text": true } },
+        "infoFontFamily": { "type": { "text": true } }, "infoFontSize": { "type": { "numeric": true } }, "infoBold": { "type": { "bool": true } }, "infoItalic": { "type": { "bool": true } }, "infoUnderline": { "type": { "bool": true } }, "infoColor": { "type": { "fill": { "solid": { "color": true } } } }, "infoBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "dnTAAlignment": { "type": { "text": true } },
+        "dnTAColumnName": { "type": { "text": true } }, "dnTAFontFamily": { "type": { "text": true } }, "dnTAFontSize": { "type": { "numeric": true } }, "dnTABold": { "type": { "bool": true } }, "dnTAItalic": { "type": { "bool": true } }, "dnTAUnderline": { "type": { "bool": true } }, "dnTAColor": { "type": { "fill": { "solid": { "color": true } } } }, "dnTABackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "dnTAKRoomAlignment": { "type": { "text": true } },
+        "dnTAKRoomColumnName": { "type": { "text": true } }, "dnTAKRoomFontFamily": { "type": { "text": true } }, "dnTAKRoomFontSize": { "type": { "numeric": true } }, "dnTAKRoomBold": { "type": { "bool": true } }, "dnTAKRoomItalic": { "type": { "bool": true } }, "dnTAKRoomUnderline": { "type": { "bool": true } }, "dnTAKRoomColor": { "type": { "fill": { "solid": { "color": true } } } }, "dnTAKRoomBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "dnTAKAreaAlignment": { "type": { "text": true } },
+        "dnTAKAreaColumnName": { "type": { "text": true } }, "dnTAKAreaFontFamily": { "type": { "text": true } }, "dnTAKAreaFontSize": { "type": { "numeric": true } }, "dnTAKAreaBold": { "type": { "bool": true } }, "dnTAKAreaItalic": { "type": { "bool": true } }, "dnTAKAreaUnderline": { "type": { "bool": true } }, "dnTAKAreaColor": { "type": { "fill": { "solid": { "color": true } } } }, "dnTAKAreaBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "frequencyAlignment": { "type": { "text": true } },
+        "frequencyColumnName": { "type": { "text": true } },
+        "frequencyFontFamily": { "type": { "text": true } }, "frequencyFontSize": { "type": { "numeric": true } }, "frequencyBold": { "type": { "bool": true } }, "frequencyItalic": { "type": { "bool": true } }, "frequencyUnderline": { "type": { "bool": true } }, "frequencyColor": { "type": { "fill": { "solid": { "color": true } } } }, "frequencyBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "selectedRowBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "selectedRowTransparency": { "type": { "numeric": true } },
+        "selectedRowFontColor": { "type": { "fill": { "solid": { "color": true } } } }
+        ,"tableHorizontalLineColor": { "type": { "fill": { "solid": { "color": true } } } }, "tableHorizontalLineWidth": { "type": { "numeric": true } },
+        "tableVerticalLineColor": { "type": { "fill": { "solid": { "color": true } } } }, "tableVerticalLineWidth": { "type": { "numeric": true } }
+      }
+    },
+    "graphXAxis": {
+      "displayName": "Grafiek x-as",
+      "properties": {
+        "title": { "type": { "text": true } },
+        "titleFontFamily": { "type": { "text": true } },
+        "titleFontSize": { "type": { "numeric": true } },
+        "titleBold": { "type": { "bool": true } },
+        "titleItalic": { "type": { "bool": true } },
+        "titleUnderline": { "type": { "bool": true } },
+        "titleColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "labelFontFamily": { "type": { "text": true } },
+        "labelFontSize": { "type": { "numeric": true } },
+        "labelBold": { "type": { "bool": true } },
+        "labelItalic": { "type": { "bool": true } },
+        "labelUnderline": { "type": { "bool": true } },
+        "labelColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "gridColor": { "type": { "fill": { "solid": { "color": true } } } }
+      }
+    },
+    "graphYAxis": {
+      "displayName": "Grafiek y-as",
+      "properties": {
+        "title": { "type": { "text": true } },
+        "titleFontFamily": { "type": { "text": true } },
+        "titleFontSize": { "type": { "numeric": true } },
+        "titleBold": { "type": { "bool": true } },
+        "titleItalic": { "type": { "bool": true } },
+        "titleUnderline": { "type": { "bool": true } },
+        "titleColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "labelFontFamily": { "type": { "text": true } },
+        "labelFontSize": { "type": { "numeric": true } },
+        "labelBold": { "type": { "bool": true } },
+        "labelItalic": { "type": { "bool": true } },
+        "labelUnderline": { "type": { "bool": true } },
+        "labelColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "gridColor": { "type": { "fill": { "solid": { "color": true } } } }
+      }
+    },
+    "graphFormatting": {
+      "displayName": "Grafiek",
+      "properties": {
+        "xTitle": { "type": { "text": true } },
+        "xTitleFontFamily": { "type": { "text": true } },
+        "xTitleFontSize": { "type": { "numeric": true } },
+        "xTitleBold": { "type": { "bool": true } },
+        "xTitleItalic": { "type": { "bool": true } },
+        "xTitleUnderline": { "type": { "bool": true } },
+        "xTitleColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "xLabelFontFamily": { "type": { "text": true } },
+        "xLabelFontSize": { "type": { "numeric": true } },
+        "xLabelBold": { "type": { "bool": true } },
+        "xLabelItalic": { "type": { "bool": true } },
+        "xLabelUnderline": { "type": { "bool": true } },
+        "xLabelColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "xGridColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "xLineWidth": { "type": { "numeric": true } },
+        "xLineStyle": { "type": { "enumeration": [
+          { "displayName": "Doorgetrokken", "value": "solid" },
+          { "displayName": "Gestreept", "value": "dashed" },
+          { "displayName": "Gestippeld", "value": "dotted" }
+        ] } },
+        "xThirdGridColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "xThirdLineWidth": { "type": { "numeric": true } },
+        "xThirdLineStyle": { "type": { "enumeration": [
+          { "displayName": "Doorgetrokken", "value": "solid" },
+          { "displayName": "Gestreept", "value": "dashed" },
+          { "displayName": "Gestippeld", "value": "dotted" }
+        ] } },
+        "xAxisLineColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "xAxisLineWidth": { "type": { "numeric": true } },
+        "yTitle": { "type": { "text": true } },
+        "yTitleFontFamily": { "type": { "text": true } },
+        "yTitleFontSize": { "type": { "numeric": true } },
+        "yTitleBold": { "type": { "bool": true } },
+        "yTitleItalic": { "type": { "bool": true } },
+        "yTitleUnderline": { "type": { "bool": true } },
+        "yTitleColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "yLabelFontFamily": { "type": { "text": true } },
+        "yLabelFontSize": { "type": { "numeric": true } },
+        "yLabelBold": { "type": { "bool": true } },
+        "yLabelItalic": { "type": { "bool": true } },
+        "yLabelUnderline": { "type": { "bool": true } },
+        "yLabelColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "yGridColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "yLineWidth": { "type": { "numeric": true } },
+        "yLineStyle": { "type": { "enumeration": [
+          { "displayName": "Doorgetrokken", "value": "solid" },
+          { "displayName": "Gestreept", "value": "dashed" },
+          { "displayName": "Gestippeld", "value": "dotted" }
+        ] } },
+        "yAxisLineColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "yAxisLineWidth": { "type": { "numeric": true } },
+        "leftPadding": { "type": { "numeric": true } },
+        "titleGap": { "type": { "numeric": true } },
+        "showGraphGuides": { "type": { "bool": true } },
+        "rightPadding": { "type": { "numeric": true } },
+        "topPadding": { "type": { "numeric": true } },
+        "bottomPadding": { "type": { "numeric": true } },
+        "lineWidth": { "type": { "numeric": true } },
+        "selectedLineWidth": { "type": { "numeric": true } },
+        "pointSize": { "type": { "numeric": true } },
+        "selectedPointSize": { "type": { "numeric": true } },
+        "dimmedOpacity": { "type": { "numeric": true } }
+      }
+    },
+    "extraDataFormatting": {
+      "displayName": "Extra data",
+      "properties": {
+        "extraDataSettingsTitle": { "type": { "text": true } },
+        "extraDataMeasurementDetailsTitle": { "type": { "text": true } },
+        "extraDataTitleFontFamily": { "type": { "text": true } },
+        "extraDataTitleFontSize": { "type": { "numeric": true } },
+        "extraDataTitleBold": { "type": { "bool": true } },
+        "extraDataTitleItalic": { "type": { "bool": true } },
+        "extraDataTitleUnderline": { "type": { "bool": true } },
+        "extraDataTitleColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataTitleBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataToggleColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataHeaderSelectedColumn": { "type": { "enumeration": [
+          { "displayName": "Omschrijving", "value": "description" },
+          { "displayName": "Detail 1", "value": "detail0" }, { "displayName": "Detail 2", "value": "detail1" },
+          { "displayName": "Detail 3", "value": "detail2" }, { "displayName": "Detail 4", "value": "detail3" },
+          { "displayName": "Detail 5", "value": "detail4" }, { "displayName": "Detail 6", "value": "detail5" },
+          { "displayName": "Detail 7", "value": "detail6" }, { "displayName": "Detail 8", "value": "detail7" },
+          { "displayName": "Detail 9", "value": "detail8" }, { "displayName": "Detail 10", "value": "detail9" },
+          { "displayName": "Detail 11", "value": "detail10" }, { "displayName": "Detail 12", "value": "detail11" },
+          { "displayName": "Detail 13", "value": "detail12" }, { "displayName": "Detail 14", "value": "detail13" },
+          { "displayName": "Detail 15", "value": "detail14" }, { "displayName": "Detail 16", "value": "detail15" },
+          { "displayName": "Detail 17", "value": "detail16" }, { "displayName": "Detail 18", "value": "detail17" },
+          { "displayName": "Detail 19", "value": "detail18" }, { "displayName": "Detail 20", "value": "detail19" },
+          { "displayName": "Detail 21", "value": "detail20" }, { "displayName": "Detail 22", "value": "detail21" },
+          { "displayName": "Detail 23", "value": "detail22" }, { "displayName": "Detail 24", "value": "detail23" },
+          { "displayName": "Detail 25", "value": "detail24" }, { "displayName": "Detail 26", "value": "detail25" },
+          { "displayName": "Detail 27", "value": "detail26" }, { "displayName": "Detail 28", "value": "detail27" },
+          { "displayName": "Detail 29", "value": "detail28" }, { "displayName": "Detail 30", "value": "detail29" },
+          { "displayName": "Detail 31", "value": "detail30" }, { "displayName": "Detail 32", "value": "detail31" },
+          { "displayName": "Detail 33", "value": "detail32" }, { "displayName": "Detail 34", "value": "detail33" },
+          { "displayName": "Detail 35", "value": "detail34" }, { "displayName": "Detail 36", "value": "detail35" },
+          { "displayName": "Detail 37", "value": "detail36" }, { "displayName": "Detail 38", "value": "detail37" },
+          { "displayName": "Detail 39", "value": "detail38" }, { "displayName": "Detail 40", "value": "detail39" }
+        ] } },
+        "extraDataHeaderFontFamily": { "type": { "text": true } },
+        "extraDataHeaderFontSize": { "type": { "numeric": true } },
+        "extraDataHeaderBold": { "type": { "bool": true } },
+        "extraDataHeaderItalic": { "type": { "bool": true } },
+        "extraDataHeaderUnderline": { "type": { "bool": true } },
+        "extraDataHeaderAlignment": { "type": { "text": true } },
+        "extraDataHeaderColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataHeaderBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataHeaderDetail0FontFamily": { "type": { "text": true } }, "extraDataHeaderDetail0FontSize": { "type": { "numeric": true } }, "extraDataHeaderDetail0Bold": { "type": { "bool": true } }, "extraDataHeaderDetail0Italic": { "type": { "bool": true } }, "extraDataHeaderDetail0Underline": { "type": { "bool": true } }, "extraDataHeaderDetail0Alignment": { "type": { "text": true } }, "extraDataHeaderDetail0Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataHeaderDetail0BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataHeaderDetail1FontFamily": { "type": { "text": true } }, "extraDataHeaderDetail1FontSize": { "type": { "numeric": true } }, "extraDataHeaderDetail1Bold": { "type": { "bool": true } }, "extraDataHeaderDetail1Italic": { "type": { "bool": true } }, "extraDataHeaderDetail1Underline": { "type": { "bool": true } }, "extraDataHeaderDetail1Alignment": { "type": { "text": true } }, "extraDataHeaderDetail1Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataHeaderDetail1BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataHeaderDetail2FontFamily": { "type": { "text": true } }, "extraDataHeaderDetail2FontSize": { "type": { "numeric": true } }, "extraDataHeaderDetail2Bold": { "type": { "bool": true } }, "extraDataHeaderDetail2Italic": { "type": { "bool": true } }, "extraDataHeaderDetail2Underline": { "type": { "bool": true } }, "extraDataHeaderDetail2Alignment": { "type": { "text": true } }, "extraDataHeaderDetail2Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataHeaderDetail2BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataHeaderDetail3FontFamily": { "type": { "text": true } }, "extraDataHeaderDetail3FontSize": { "type": { "numeric": true } }, "extraDataHeaderDetail3Bold": { "type": { "bool": true } }, "extraDataHeaderDetail3Italic": { "type": { "bool": true } }, "extraDataHeaderDetail3Underline": { "type": { "bool": true } }, "extraDataHeaderDetail3Alignment": { "type": { "text": true } }, "extraDataHeaderDetail3Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataHeaderDetail3BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataHeaderDetail4FontFamily": { "type": { "text": true } }, "extraDataHeaderDetail4FontSize": { "type": { "numeric": true } }, "extraDataHeaderDetail4Bold": { "type": { "bool": true } }, "extraDataHeaderDetail4Italic": { "type": { "bool": true } }, "extraDataHeaderDetail4Underline": { "type": { "bool": true } }, "extraDataHeaderDetail4Alignment": { "type": { "text": true } }, "extraDataHeaderDetail4Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataHeaderDetail4BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataHeaderDetail5FontFamily": { "type": { "text": true } }, "extraDataHeaderDetail5FontSize": { "type": { "numeric": true } }, "extraDataHeaderDetail5Bold": { "type": { "bool": true } }, "extraDataHeaderDetail5Italic": { "type": { "bool": true } }, "extraDataHeaderDetail5Underline": { "type": { "bool": true } }, "extraDataHeaderDetail5Alignment": { "type": { "text": true } }, "extraDataHeaderDetail5Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataHeaderDetail5BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataHeaderDetail6FontFamily": { "type": { "text": true } }, "extraDataHeaderDetail6FontSize": { "type": { "numeric": true } }, "extraDataHeaderDetail6Bold": { "type": { "bool": true } }, "extraDataHeaderDetail6Italic": { "type": { "bool": true } }, "extraDataHeaderDetail6Underline": { "type": { "bool": true } }, "extraDataHeaderDetail6Alignment": { "type": { "text": true } }, "extraDataHeaderDetail6Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataHeaderDetail6BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataHeaderDetail7FontFamily": { "type": { "text": true } }, "extraDataHeaderDetail7FontSize": { "type": { "numeric": true } }, "extraDataHeaderDetail7Bold": { "type": { "bool": true } }, "extraDataHeaderDetail7Italic": { "type": { "bool": true } }, "extraDataHeaderDetail7Underline": { "type": { "bool": true } }, "extraDataHeaderDetail7Alignment": { "type": { "text": true } }, "extraDataHeaderDetail7Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataHeaderDetail7BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataHeaderDetail8FontFamily": { "type": { "text": true } }, "extraDataHeaderDetail8FontSize": { "type": { "numeric": true } }, "extraDataHeaderDetail8Bold": { "type": { "bool": true } }, "extraDataHeaderDetail8Italic": { "type": { "bool": true } }, "extraDataHeaderDetail8Underline": { "type": { "bool": true } }, "extraDataHeaderDetail8Alignment": { "type": { "text": true } }, "extraDataHeaderDetail8Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataHeaderDetail8BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataHeaderDetail9FontFamily": { "type": { "text": true } }, "extraDataHeaderDetail9FontSize": { "type": { "numeric": true } }, "extraDataHeaderDetail9Bold": { "type": { "bool": true } }, "extraDataHeaderDetail9Italic": { "type": { "bool": true } }, "extraDataHeaderDetail9Underline": { "type": { "bool": true } }, "extraDataHeaderDetail9Alignment": { "type": { "text": true } }, "extraDataHeaderDetail9Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataHeaderDetail9BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataValueSelectedColumn": { "type": { "enumeration": [
+          { "displayName": "Omschrijving", "value": "description" },
+          { "displayName": "Detail 1", "value": "detail0" }, { "displayName": "Detail 2", "value": "detail1" },
+          { "displayName": "Detail 3", "value": "detail2" }, { "displayName": "Detail 4", "value": "detail3" },
+          { "displayName": "Detail 5", "value": "detail4" }, { "displayName": "Detail 6", "value": "detail5" },
+          { "displayName": "Detail 7", "value": "detail6" }, { "displayName": "Detail 8", "value": "detail7" },
+          { "displayName": "Detail 9", "value": "detail8" }, { "displayName": "Detail 10", "value": "detail9" },
+          { "displayName": "Detail 11", "value": "detail10" }, { "displayName": "Detail 12", "value": "detail11" },
+          { "displayName": "Detail 13", "value": "detail12" }, { "displayName": "Detail 14", "value": "detail13" },
+          { "displayName": "Detail 15", "value": "detail14" }, { "displayName": "Detail 16", "value": "detail15" },
+          { "displayName": "Detail 17", "value": "detail16" }, { "displayName": "Detail 18", "value": "detail17" },
+          { "displayName": "Detail 19", "value": "detail18" }, { "displayName": "Detail 20", "value": "detail19" },
+          { "displayName": "Detail 21", "value": "detail20" }, { "displayName": "Detail 22", "value": "detail21" },
+          { "displayName": "Detail 23", "value": "detail22" }, { "displayName": "Detail 24", "value": "detail23" },
+          { "displayName": "Detail 25", "value": "detail24" }, { "displayName": "Detail 26", "value": "detail25" },
+          { "displayName": "Detail 27", "value": "detail26" }, { "displayName": "Detail 28", "value": "detail27" },
+          { "displayName": "Detail 29", "value": "detail28" }, { "displayName": "Detail 30", "value": "detail29" },
+          { "displayName": "Detail 31", "value": "detail30" }, { "displayName": "Detail 32", "value": "detail31" },
+          { "displayName": "Detail 33", "value": "detail32" }, { "displayName": "Detail 34", "value": "detail33" },
+          { "displayName": "Detail 35", "value": "detail34" }, { "displayName": "Detail 36", "value": "detail35" },
+          { "displayName": "Detail 37", "value": "detail36" }, { "displayName": "Detail 38", "value": "detail37" },
+          { "displayName": "Detail 39", "value": "detail38" }, { "displayName": "Detail 40", "value": "detail39" }
+        ] } },
+        "extraDataValueFontFamily": { "type": { "text": true } },
+        "extraDataValueFontSize": { "type": { "numeric": true } },
+        "extraDataValueBold": { "type": { "bool": true } },
+        "extraDataValueItalic": { "type": { "bool": true } },
+        "extraDataValueUnderline": { "type": { "bool": true } },
+        "extraDataValueAlignment": { "type": { "text": true } },
+        "extraDataValueColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataValueBackgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "extraDataValueDecimals": { "type": { "numeric": true } },
+        "extraDataValueDetail0FontFamily": { "type": { "text": true } }, "extraDataValueDetail0FontSize": { "type": { "numeric": true } }, "extraDataValueDetail0Bold": { "type": { "bool": true } }, "extraDataValueDetail0Italic": { "type": { "bool": true } }, "extraDataValueDetail0Underline": { "type": { "bool": true } }, "extraDataValueDetail0Alignment": { "type": { "text": true } }, "extraDataValueDetail0Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail0BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail0Decimals": { "type": { "numeric": true } },
+        "extraDataValueDetail1FontFamily": { "type": { "text": true } }, "extraDataValueDetail1FontSize": { "type": { "numeric": true } }, "extraDataValueDetail1Bold": { "type": { "bool": true } }, "extraDataValueDetail1Italic": { "type": { "bool": true } }, "extraDataValueDetail1Underline": { "type": { "bool": true } }, "extraDataValueDetail1Alignment": { "type": { "text": true } }, "extraDataValueDetail1Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail1BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail1Decimals": { "type": { "numeric": true } },
+        "extraDataValueDetail2FontFamily": { "type": { "text": true } }, "extraDataValueDetail2FontSize": { "type": { "numeric": true } }, "extraDataValueDetail2Bold": { "type": { "bool": true } }, "extraDataValueDetail2Italic": { "type": { "bool": true } }, "extraDataValueDetail2Underline": { "type": { "bool": true } }, "extraDataValueDetail2Alignment": { "type": { "text": true } }, "extraDataValueDetail2Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail2BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail2Decimals": { "type": { "numeric": true } },
+        "extraDataValueDetail3FontFamily": { "type": { "text": true } }, "extraDataValueDetail3FontSize": { "type": { "numeric": true } }, "extraDataValueDetail3Bold": { "type": { "bool": true } }, "extraDataValueDetail3Italic": { "type": { "bool": true } }, "extraDataValueDetail3Underline": { "type": { "bool": true } }, "extraDataValueDetail3Alignment": { "type": { "text": true } }, "extraDataValueDetail3Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail3BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail3Decimals": { "type": { "numeric": true } },
+        "extraDataValueDetail4FontFamily": { "type": { "text": true } }, "extraDataValueDetail4FontSize": { "type": { "numeric": true } }, "extraDataValueDetail4Bold": { "type": { "bool": true } }, "extraDataValueDetail4Italic": { "type": { "bool": true } }, "extraDataValueDetail4Underline": { "type": { "bool": true } }, "extraDataValueDetail4Alignment": { "type": { "text": true } }, "extraDataValueDetail4Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail4BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail4Decimals": { "type": { "numeric": true } },
+        "extraDataValueDetail5FontFamily": { "type": { "text": true } }, "extraDataValueDetail5FontSize": { "type": { "numeric": true } }, "extraDataValueDetail5Bold": { "type": { "bool": true } }, "extraDataValueDetail5Italic": { "type": { "bool": true } }, "extraDataValueDetail5Underline": { "type": { "bool": true } }, "extraDataValueDetail5Alignment": { "type": { "text": true } }, "extraDataValueDetail5Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail5BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail5Decimals": { "type": { "numeric": true } },
+        "extraDataValueDetail6FontFamily": { "type": { "text": true } }, "extraDataValueDetail6FontSize": { "type": { "numeric": true } }, "extraDataValueDetail6Bold": { "type": { "bool": true } }, "extraDataValueDetail6Italic": { "type": { "bool": true } }, "extraDataValueDetail6Underline": { "type": { "bool": true } }, "extraDataValueDetail6Alignment": { "type": { "text": true } }, "extraDataValueDetail6Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail6BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail6Decimals": { "type": { "numeric": true } },
+        "extraDataValueDetail7FontFamily": { "type": { "text": true } }, "extraDataValueDetail7FontSize": { "type": { "numeric": true } }, "extraDataValueDetail7Bold": { "type": { "bool": true } }, "extraDataValueDetail7Italic": { "type": { "bool": true } }, "extraDataValueDetail7Underline": { "type": { "bool": true } }, "extraDataValueDetail7Alignment": { "type": { "text": true } }, "extraDataValueDetail7Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail7BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail7Decimals": { "type": { "numeric": true } },
+        "extraDataValueDetail8FontFamily": { "type": { "text": true } }, "extraDataValueDetail8FontSize": { "type": { "numeric": true } }, "extraDataValueDetail8Bold": { "type": { "bool": true } }, "extraDataValueDetail8Italic": { "type": { "bool": true } }, "extraDataValueDetail8Underline": { "type": { "bool": true } }, "extraDataValueDetail8Alignment": { "type": { "text": true } }, "extraDataValueDetail8Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail8BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail8Decimals": { "type": { "numeric": true } },
+        "extraDataValueDetail9FontFamily": { "type": { "text": true } }, "extraDataValueDetail9FontSize": { "type": { "numeric": true } }, "extraDataValueDetail9Bold": { "type": { "bool": true } }, "extraDataValueDetail9Italic": { "type": { "bool": true } }, "extraDataValueDetail9Underline": { "type": { "bool": true } }, "extraDataValueDetail9Alignment": { "type": { "text": true } }, "extraDataValueDetail9Color": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail9BackgroundColor": { "type": { "fill": { "solid": { "color": true } } } }, "extraDataValueDetail9Decimals": { "type": { "numeric": true } }
+      }
+    },
+    "debugStyle": {
+      "displayName": "Debug",
+      "properties": {
+        "showDebugTable": { "type": { "bool": true } }
+      }
+    }
+  },
+  "dataViewMappings": [
+    {
+      "conditions": [
+        {
+          "meting": {
+            "max": 10
+          },
+          "frequency": {
+            "max": 1
+          },
+          "dnT": {
+            "max": 1
+          },
+          "dnTA": {
+            "max": 1
+          },
+          "dnTAKVerblijfsruimte": {
+            "max": 1
+          },
+          "dnTAKVerblijfsgebied": {
+            "max": 1
+          },
+          "columnVisibility": {
+            "max": 1
+          },
+          "detail": {
+            "max": 20
+          },
+          "measurementDetails": {
+            "max": 20
+          },
+          "topDetails": {
+            "max": 20
+          },
+          "warning": {
+            "max": 10
+          }
+        }
+      ],
+      "table": {
+        "rows": {
+          "select": [
+            {
+              "for": {
+                "in": "meting"
+              }
+            },
+            {
+              "for": {
+                "in": "frequency"
+              }
+            },
+            {
+              "for": {
+                "in": "dnT"
+              }
+            },
+            {
+              "for": {
+                "in": "dnTA"
+              }
+            },
+            {
+              "for": {
+                "in": "dnTAKVerblijfsruimte"
+              }
+            },
+            {
+              "for": {
+                "in": "dnTAKVerblijfsgebied"
+              }
+            },
+            {
+              "for": {
+                "in": "columnVisibility"
+              }
+            },
+            {
+              "for": {
+                "in": "detail"
+              }
+            },
+            {
+              "for": {
+                "in": "measurementDetails"
+              }
+            },
+            {
+              "for": {
+                "in": "topDetails"
+              }
+            },
+            {
+              "for": {
+                "in": "warning"
+              }
+            }
+          ],
+          "dataReductionAlgorithm": {
+            "window": {
+              "count": 30000
+            }
+          }
+        }
+      }
+    }
+  ],
+  "privileges": []
+}
