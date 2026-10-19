@@ -81,9 +81,17 @@ Microsoft-sampledataset uit de certificeringsdocumentatie.
 - [ ] Prestaties met veel metingen/frequenties en tot 30.000 aangeleverde rijen;
   beoordeel ook dat datareductie geen onbedoelde onvolledige resultaten geeft.
 - [ ] Actuele Power BI Desktop en Service, Edge/Chrome/Firefox en embedded app.
-- [ ] Toetsenbordbediening, focus, screenreader, kleurcontrast en high-contrast
-  beoordelen. Volledige ondersteuning wordt niet door deze release geclaimd;
-  registreer en verhelp tekortkomingen voor indiening.
+- [ ] In Power BI toetsenbordbediening testen: Tab/Shift+Tab, Enter/Spatie op
+  sortering, meetrijen en grafiekreeksen; pijltjestoetsen op paneelverdelers;
+  focus mag na acties niet onverwacht verdwijnen.
+- [ ] Screenreaderlabels, aria-sort/aria-selected/aria-expanded, focuszichtbaarheid
+  en visuele contrastverhouding beoordelen; controleer dat de combinatie van
+  streeppatronen de grafiekreeksen in high contrast onderscheidbaar houdt.
+- [ ] High contrast in Power BI aanzetten en tabellen, grafiek, selectie,
+  kleurstalen, instellingen en focus in zowel zwart als wit thema controleren.
+- [ ] De Engelse `en-US`- en Nederlandse `nl-NL`-interface in Power BI testen,
+  inclusief veldrollen en formatteringspaneel. Veldnamen en door gebruikers
+  ingestelde titels blijven bewust hun oorspronkelijke tekst houden.
 - [ ] Desktop-PDF testen; grafiek/assen/tabel mogen niet leeg of verschoven zijn.
 
 ## Embedded PDF-export
@@ -113,10 +121,20 @@ De visual meldt rendering pas gereed nadat alle ingeplande layoutframes klaar
 zijn. De visual vraagt geen `ExportContent`-privilege: Service-/REST-export
 wordt door Power BI uitgevoerd en is iets anders dan eigen bestandsdownloads.
 
+De broncode bevat nu hostpalette-gebaseerde high-contrastkleuren,
+Power BI-enhanced keyboard focus met toetsenbordacties voor sorteren, selecteren,
+details en paneelverdelers, plus `en-US`/`nl-NL` resources. Deze codepaden hebben
+regressietests, maar zijn nog niet handmatig gevalideerd in Power BI; voltooi de
+praktijktests hierboven voordat je deze eigenschappen voor de listing claimt.
+Deze wijzigingen staan momenteel alleen lokaal op `main`; de gepubliceerde branch
+`certification` blijft bewust op de vorige release totdat de nieuwe build voor
+indiening is vastgesteld.
+
 ## Partner Center - nog nodig
 
-- [ ] Repository publiceren en reviewer-toegang regelen; branch `certification`
-  moet exact de ingediende versie bevatten.
+- [x] Publieke repository aangemaakt; `main` en `certification` bestaan.
+- [ ] Werk branch `certification` pas bij wanneer de definitieve versie voor
+  indiening is vastgesteld; de branch moet exact met het geteste pakket overeenkomen.
 - [ ] Supportadres en eigendom/rechten/licentie juridisch bevestigen.
 - [ ] [PRIVACY.md](PRIVACY.md) laten goedkeuren door de verantwoordelijke en een
   publiek toegankelijke privacy-URL invullen in de listing.

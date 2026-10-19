@@ -60,5 +60,11 @@ lokale check is geen Microsoft-goedkeuring. Embedded PDF-export via
 `exportToFile` ondersteunt deze custom visual pas na Microsoft-certificering;
 ook de capaciteit, tenantinstellingen en exportaanvraag moeten daarvoor kloppen.
 
+De visual gebruikt de Power BI-locale voor getalnotatie en bevat interface- en
+formatteringsvertalingen voor Nederlands (`nl-NL`) en Engels (`en-US`). High
+contrast gebruikt de hostkleuren van Power BI; toetsenbordbediening omvat
+sortering, metingselectie, details en paneelverdeling. Test deze opties nog in
+Power BI Desktop en Service volgens [CERTIFICATION.md](CERTIFICATION.md).
+
 Support: [SUPPORT.md](SUPPORT.md). Privacy: [PRIVACY.md](PRIVACY.md).
 Licentie: [LICENSE](LICENSE).

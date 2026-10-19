@@ -147,6 +147,95 @@ test("selection is disabled when the host disallows interactions", () => {
     assert.equal(harness.visual.selectedGraphSeries.size, 0);
 });
 
+test("keyboard activation accepts Enter and Space and ignores other keys", () => {
+    const harness = createHarness();
+    const listeners = {};
+    const element = { addEventListener: (name, callback) => { listeners[name] = callback; } };
+    const activated = [];
+    harness.visual.bindKeyboardActivation(element, (event) => activated.push(event.key));
+    for (const key of ["Enter", " ", "ArrowDown"]) {
+        let prevented = false;
+        listeners.keydown({ key, preventDefault: () => { prevented = true; } });
+        assert.equal(prevented, key !== "ArrowDown");
+    }
+    assert.deepEqual(activated, ["Enter", " "]);
+});
+
+test("all UI and field-role localization keys exist in both supported locales", () => {
+    const english = JSON.parse(fs.readFileSync(path.join(__dirname, "../stringResources/en-US/resources.resjson"), "utf8"));
+    const dutch = JSON.parse(fs.readFileSync(path.join(__dirname, "../stringResources/nl-NL/resources.resjson"), "utf8"));
+    const capabilities = JSON.parse(fs.readFileSync(path.join(__dirname, "../capabilities.json"), "utf8"));
+    const uiKeys = [...source.matchAll(/localize\(\s*"([^"]+)"/g)].map((match) => match[1]);
+    const formattingKeys = [...source.matchAll(/"[^"]+":\s*"(Format_[^"]+)"/g)].map((match) => match[1]);
+    const roleKeys = capabilities.dataRoles.map((role) => role.displayNameKey);
+    const missing = [...new Set([...uiKeys, ...formattingKeys, ...roleKeys])].filter((key) => !(key in english) || !(key in dutch));
+    assert.deepEqual(missing, []);
+    assert.deepEqual(Object.keys(english).sort(), Object.keys(dutch).sort());
+});
+
+test("all fixed formatting display names are covered by the localization mapping", () => {
+    const settingsSource = fs.readFileSync(path.join(__dirname, "../src/settings.ts"), "utf8");
+    const displayNames = [...settingsSource.matchAll(/displayName\s*[:=]\s*"([^"]+)"/g)].map((match) => match[1]);
+    const mappings = new Set([...source.matchAll(/"([^"]+)":\s*"Format_[^"]+"/g)].map((match) => match[1]));
+    const missing = [...new Set(displayNames)].filter((name) => !mappings.has(name) && !/^Detail \d+$/.test(name));
+    assert.deepEqual(missing, []);
+});
+
+test("formatting labels receive Power BI localization keys", () => {
+    const harness = createHarness();
+    const group = { displayName: "Titel", slices: [{ displayName: "Tekstkleur" }] };
+    const model = { cards: [{ displayName: "Algemeen", groups: [group] }] };
+    group.parent = model;
+    harness.visual.localizationManager = { getDisplayName: (key) => key };
+    harness.visual.formattingSettings = model;
+    harness.visual.localizeFormattingLabels();
+    assert.equal(model.cards[0].displayNameKey, "Format_General");
+    assert.equal(group.displayNameKey, "Format_Title");
+    assert.equal(group.slices[0].displayNameKey, "Format_FontColor");
+});
+
+test("high-contrast theme uses the Power BI host palette", () => {
+    const harness = createHarness();
+    const classes = new Set();
+    const properties = {};
+    harness.visual.container = {
+        classList: {
+            toggle: (name, enabled) => enabled ? classes.add(name) : classes.delete(name)
+        },
+        style: { setProperty: (name, value) => { properties[name] = value; } }
+    };
+    harness.visual.host.colorPalette = {
+        isHighContrast: true,
+        foreground: { value: "#ffffff" },
+        background: { value: "#000000" },
+        foregroundSelected: { value: "#ffff00" }
+    };
+    harness.visual.applyAccessibilityTheme();
+    assert.equal(classes.has("rlg-high-contrast"), true);
+    assert.equal(properties["--rlg-hc-foreground"], "#ffffff");
+    assert.equal(properties["--rlg-hc-background"], "#000000");
+    assert.equal(properties["--rlg-hc-selected"], "#ffff00");
+});
+
+test("keyboard pane resizing respects pane minimums and preserves total height", () => {
+    const harness = createHarness();
+    const heights = new Map([["table", 200], ["debug", 200]]);
+    harness.visual.getPaneHeight = (key) => heights.get(key);
+    harness.visual.getMinimumPaneHeight = () => 120;
+    harness.visual.getRenderedPaneHeight = () => 400;
+    harness.visual.setResizablePaneHeight = (key, height) => heights.set(key, height);
+
+    harness.visual.resizePanesByKeyboard({ key: "table", defaultHeight: 200 }, { key: "debug", defaultHeight: 200 }, 10);
+    assert.equal(heights.get("table"), 210);
+    assert.equal(heights.get("debug"), 190);
+
+    heights.set("table", 120);
+    heights.set("debug", 280);
+    harness.visual.resizePanesByKeyboard({ key: "table", defaultHeight: 120 }, { key: "debug", defaultHeight: 280 }, -40);
+    assert.equal(heights.get("table"), 120);
+    assert.equal(heights.get("debug"), 280);
+});
+
 test("rich text renders untrusted markup as text and only creates sub/sup elements", () => {
     const harness = createHarness();
     const parent = { children: [], appendChild(child) { this.children.push(child); } };

@@ -2,61 +2,73 @@
   "dataRoles": [
     {
       "displayName": "Measurement",
+      "displayNameKey": "Role_Measurement",
       "name": "meting",
       "kind": "GroupingOrMeasure"
     },
     {
       "displayName": "Frequency",
+      "displayNameKey": "Role_Frequency",
       "name": "frequency",
       "kind": "Grouping"
     },
     {
       "displayName": "DnT/LnT",
+      "displayNameKey": "Role_DnT",
       "name": "dnT",
       "kind": "GroupingOrMeasure"
     },
     {
       "displayName": "DnT,A/LnT,A",
+      "displayNameKey": "Role_DnTA",
       "name": "dnTA",
       "kind": "GroupingOrMeasure"
     },
     {
       "displayName": "DnT,A;k (verblijfsruimte)",
+      "displayNameKey": "Role_DnTAKRoom",
       "name": "dnTAKVerblijfsruimte",
       "kind": "GroupingOrMeasure"
     },
     {
       "displayName": "DnT,A;k (verblijfsgebied)",
+      "displayNameKey": "Role_DnTAKArea",
       "name": "dnTAKVerblijfsgebied",
       "kind": "GroupingOrMeasure"
     },
     {
       "displayName": "Kolommen tonen",
+      "displayNameKey": "Role_ColumnVisibility",
       "name": "columnVisibility",
       "kind": "Grouping"
     },
     {
       "displayName": "Details DnT/LnT",
+      "displayNameKey": "Role_Details",
       "name": "detail",
       "kind": "GroupingOrMeasure"
     },
     {
       "displayName": "Extra measurement details",
+      "displayNameKey": "Role_MeasurementDetails",
       "name": "measurementDetails",
       "kind": "GroupingOrMeasure"
     },
     {
       "displayName": "Rapport details",
+      "displayNameKey": "Role_ReportDetails",
       "name": "topDetails",
       "kind": "GroupingOrMeasure"
     },
     {
       "displayName": "Waarschuwingen",
+      "displayNameKey": "Role_Warnings",
       "name": "warning",
       "kind": "GroupingOrMeasure"
     }
   ],
   "supportsMultiVisualSelection": true,
+  "supportsKeyboardFocus": true,
   "tooltips": {
     "supportedTypes": {
       "default": true

@@ -10,6 +10,7 @@ import { ReportTextStyleSettings, VisualFormattingSettingsModel } from "./settin
 import DataView = powerbi.DataView;
 import DataViewMetadataColumn = powerbi.DataViewMetadataColumn;
 import DataViewTable = powerbi.DataViewTable;
+import ILocalizationManager = powerbi.extensibility.ILocalizationManager;
 import IVisual = powerbi.extensibility.visual.IVisual;
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
@@ -19,6 +20,139 @@ import ISelectionManager = powerbi.extensibility.ISelectionManager;
 
 const SINGLE_VALUE_ROLES = ["dnTA", "dnTAKVerblijfsruimte", "dnTAKVerblijfsgebied"] as const;
 const GRAPH_FREQUENCIES = [12.5, 16, 20, 25, 31.5, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000, 12500, 16000, 20000];
+const FORMATTING_LABEL_KEYS: Record<string, string> = {
+    "Algemeen": "Format_General",
+    "Titelbalken": "Format_TitleBars",
+    "Tabellen - Titel": "Format_TablesTitle",
+    "Tabellen - Spacing": "Format_TablesSpacing",
+    "Spacing": "Format_Spacing",
+    "Lijnen": "Format_Lines",
+    "Vensterlijnen": "Format_WindowLines",
+    "Tekst": "Format_Text",
+    "Bovenvenster - Kolommen": "Format_TopPanelColumns",
+    "Bovenvenster - Lijnen": "Format_TopPanelLines",
+    "Titel tonen": "Format_ShowTitle",
+    "Titel": "Format_Title",
+    "Titel instellingen": "Format_TitleSettings",
+    "Titel Measurement details": "Format_MeasurementDetailsTitle",
+    "Lettertype": "Format_FontFamily",
+    "Titel lettertype": "Format_TitleFontFamily",
+    "Tekstgrootte": "Format_FontSize",
+    "Titel tekstgrootte": "Format_TitleFontSize",
+    "Vet": "Format_Bold",
+    "Titel vet": "Format_TitleBold",
+    "Cursief": "Format_Italic",
+    "Titel cursief": "Format_TitleItalic",
+    "Onderstrepen": "Format_Underline",
+    "Titel onderstrepen": "Format_TitleUnderline",
+    "Tekstopmaak": "Format_FontControl",
+    "Titel opmaak": "Format_TitleFormatting",
+    "Tekstkleur": "Format_FontColor",
+    "Titel kleur": "Format_TitleColor",
+    "Achtergrond": "Format_Background",
+    "Achtergrondkleur": "Format_BackgroundColor",
+    "Decimalen": "Format_Decimals",
+    "Doorzichtigheid (%)": "Format_Transparency",
+    "Tabel": "Format_Table",
+    "Tabellen": "Format_Tables",
+    "Kolom": "Format_Column",
+    "Uitlijning": "Format_Alignment",
+    "Regelhoogte": "Format_RowHeight",
+    "Verticale padding (px)": "Format_VerticalPadding",
+    "Horizontale padding (px)": "Format_HorizontalPadding",
+    "Celpadding koprijen (px)": "Format_HeaderCellPadding",
+    "Celpadding metingrijen (px)": "Format_MeasurementCellPadding",
+    "Celpadding detailrijen (px)": "Format_DetailCellPadding",
+    "Rijhoogte frequenties (px)": "Format_FrequencyRowHeight",
+    "Breedte Frequentie-kolom (px)": "Format_FrequencyColumnWidth",
+    "Breedte metingkolommen (px)": "Format_MeasurementColumnWidth",
+    "Kleur lijnen tussen octaafbanden": "Format_OctaveBandLineColor",
+    "Dikte lijnen tussen octaafbanden (px)": "Format_OctaveBandLineWidth",
+    "Kleur lijnen tussen resultaatrijen": "Format_ResultRowLineColor",
+    "Dikte lijnen tussen resultaatrijen (px)": "Format_ResultRowLineWidth",
+    "Kleur verticale lijnen": "Format_VerticalLineColor",
+    "Dikte verticale lijnen (px)": "Format_VerticalLineWidth",
+    "Rapporttabel lijn tonen": "Format_ReportLineVisible",
+    "Rapporttabel kleur": "Format_ReportLineColor",
+    "Rapporttabel dikte (px)": "Format_ReportLineWidth",
+    "Grafiek lijn tonen": "Format_GraphLineVisible",
+    "Grafiek kleur": "Format_GraphLineColor",
+    "Grafiek dikte (px)": "Format_GraphLineWidth",
+    "Resultatentabel lijn tonen": "Format_ResultTableLineVisible",
+    "Resultatentabel kleur": "Format_ResultTableLineColor",
+    "Resultatentabel dikte (px)": "Format_ResultTableLineWidth",
+    "Zijpaneel lijn tonen": "Format_SidePanelLineVisible",
+    "Zijpaneel kleur": "Format_SidePanelLineColor",
+    "Zijpaneel dikte (px)": "Format_SidePanelLineWidth",
+    "Frequentie": "Format_Frequency",
+    "Frequenties": "Format_Frequencies",
+    "Meting": "Format_Measurement",
+    "Metingen": "Format_Measurements",
+    "Omschrijving": "Format_Description",
+    "Toelichting": "Format_Explanation",
+    "Rapport": "Format_Report",
+    "Rapporttabel": "Format_ReportTable",
+    "Grafiek": "Format_Graph",
+    "Kleur": "Format_Color",
+    "Breedte": "Format_Width",
+    "Hoogte": "Format_Height",
+    "Rij": "Format_Row",
+    "DnT,A": "Format_DnTA",
+    "DnT,A;k VR": "Format_DnTAKRoomShort",
+    "DnT,A;k VG": "Format_DnTAKAreaShort",
+    "Info": "Format_Info",
+    "DnT,A;k verblijfsruimte": "Format_DnTAKRoom",
+    "DnT,A;k verblijfsgebied": "Format_DnTAKArea",
+    "Tabellen - Kolommen": "Format_TablesColumns",
+    "Tabel - Selectie": "Format_TableSelection",
+    "Achtergrond kolomkop": "Format_ColumnHeaderBackground",
+    "Horizontale lijnkleur": "Format_HorizontalLineColor",
+    "Horizontale lijndikte (px)": "Format_HorizontalLineWidth",
+    "Verticale lijnkleur": "Format_VerticalLineColor",
+    "Verticale lijndikte (px)": "Format_VerticalLineWidth",
+    "Horizontale lijnen kleur": "Format_HorizontalLinesColor",
+    "Horizontale lijnen dikte (px)": "Format_HorizontalLinesWidth",
+    "Verticale lijnen kleur": "Format_VerticalLinesColor",
+    "Verticale lijnen dikte (px)": "Format_VerticalLinesWidth",
+    "Grafiek x-as": "Format_GraphXAxis",
+    "Grafiek y-as": "Format_GraphYAxis",
+    "Label lettertype": "Format_LabelFontFamily",
+    "Label tekstgrootte": "Format_LabelFontSize",
+    "Labels vet": "Format_LabelsBold",
+    "Labels cursief": "Format_LabelsItalic",
+    "Labels onderstrepen": "Format_LabelsUnderline",
+    "Label opmaak": "Format_LabelFormatting",
+    "Labelkleur": "Format_LabelColor",
+    "Octaaflijnkleur": "Format_OctaveLineColor",
+    "Octaaflijndikte": "Format_OctaveLineWidth",
+    "Octaaflijntype": "Format_OctaveLineStyle",
+    "Tertslijnkleur": "Format_ThirdLineColor",
+    "Tertslijndikte": "Format_ThirdLineWidth",
+    "Tertslijntype": "Format_ThirdLineStyle",
+    "Aslijnkleur": "Format_AxisLineColor",
+    "Aslijndikte": "Format_AxisLineWidth",
+    "Lijnkleur": "Format_LineColor",
+    "Lijndikte": "Format_LineWidth",
+    "Lijntype": "Format_LineStyle",
+    "Links (px)": "Format_LeftPadding",
+    "Rechts (px)": "Format_RightPadding",
+    "Boven (px)": "Format_TopPadding",
+    "Onder (px)": "Format_BottomPadding",
+    "Titelmarge (px)": "Format_TitleGap",
+    "Hulplijnen tonen": "Format_ShowGuides",
+    "Padding": "Format_Padding",
+    "Niet geselecteerd": "Format_Unselected",
+    "Geselecteerd": "Format_Selected",
+    "Puntgrootte": "Format_PointSize",
+    "Dekking niet-geselecteerd": "Format_UnselectedOpacity",
+    "Kleur pijltje": "Format_ToggleColor",
+    "Extra data": "Format_ExtraData",
+    "Debugtabel tonen": "Format_ShowDebugTable",
+    "Debug": "Format_Debug",
+    "Doorgetrokken": "Format_LineSolid",
+    "Gestreept": "Format_LineDashed",
+    "Gestippeld": "Format_LineDotted"
+};
 type GraphFrequencyMode = "available" | "extended" | "custom";
 
 interface RoleIndexes {
@@ -103,7 +237,7 @@ interface RenderCycle {
 }
 
 export class Visual implements IVisual {
-    private static readonly VisualVersion = "1.0.1.188";
+    private static readonly VisualVersion = "1.0.1.189";
     private static readonly DntVisibilityStorageKey = "resultatenluchtgeluid.dntVisibility";
     private static readonly ExtraTableBottomMargin = 2;
     private static readonly PaneGap = 10;
@@ -113,6 +247,8 @@ export class Visual implements IVisual {
     private container: HTMLElement;
     private formattingSettingsService: FormattingSettingsService;
     private formattingSettings: VisualFormattingSettingsModel;
+    private localizationManager: ILocalizationManager;
+    private locale: string;
     private lastUpdateOptions: VisualUpdateOptions | null = null;
     private settingsOpen: boolean = false;
     private settingsOutsideClickHandler: ((event: Event) => void) | null = null;
@@ -148,7 +284,9 @@ export class Visual implements IVisual {
     constructor(options: VisualConstructorOptions) {
         this.host = options.host;
         this.selectionManager = options.host.createSelectionManager();
-        this.formattingSettingsService = new FormattingSettingsService();
+        this.localizationManager = options.host.createLocalizationManager();
+        this.locale = options.host.locale;
+        this.formattingSettingsService = new FormattingSettingsService(this.localizationManager);
         this.formattingSettings = new VisualFormattingSettingsModel();
 
         this.container = document.createElement("div");
@@ -163,6 +301,48 @@ export class Visual implements IVisual {
             event.stopPropagation();
             this.selectionManager.showContextMenu(selectionId, { x: event.clientX, y: event.clientY });
         });
+    }
+
+    private localize(key: string): string {
+        return this.localizationManager.getDisplayName(key);
+    }
+
+    private localizeFormattingLabels(): void {
+        const visited = new Set<object>();
+        const apply = (value: unknown): void => {
+            if (value === null || typeof value !== "object" || visited.has(value)) {
+                return;
+            }
+            visited.add(value);
+            const entity = value as { displayName?: unknown; displayNameKey?: string };
+            if (typeof entity.displayName === "string" && FORMATTING_LABEL_KEYS[entity.displayName]) {
+                entity.displayNameKey = FORMATTING_LABEL_KEYS[entity.displayName];
+            } else if (typeof entity.displayName === "string" && /^Detail \d+$/.test(entity.displayName)) {
+                entity.displayNameKey = "Format_Detail";
+            }
+            Object.values(value).forEach(apply);
+        };
+        apply(this.formattingSettings);
+    }
+
+    private bindKeyboardActivation(element: HTMLElement, action: (event: KeyboardEvent) => void): void {
+        element.addEventListener("keydown", (event: KeyboardEvent) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                action(event);
+            }
+        });
+    }
+
+    private applyAccessibilityTheme(): void {
+        const palette = this.host.colorPalette;
+        const highContrast = palette.isHighContrast;
+        this.container.classList.toggle("rlg-high-contrast", highContrast);
+        if (highContrast) {
+            this.container.style.setProperty("--rlg-hc-foreground", palette.foreground.value);
+            this.container.style.setProperty("--rlg-hc-background", palette.background.value);
+            this.container.style.setProperty("--rlg-hc-selected", palette.foregroundSelected.value);
+        }
     }
 
     public update(options: VisualUpdateOptions): void {
@@ -236,6 +416,8 @@ export class Visual implements IVisual {
 
     private render(options: VisualUpdateOptions): void {
         this.detachSettingsOutsideClickHandler();
+        this.locale = this.host.locale || "en-US";
+        this.applyAccessibilityTheme();
         this.lastUpdateOptions = options;
         this.viewportHeight = options.viewport.height;
         this.viewportWidth = options.viewport.width;
@@ -310,18 +492,18 @@ export class Visual implements IVisual {
         }
 
         if (!table || !table.columns || table.columns.length === 0 || !table.rows || table.rows.length === 0) {
-            this.renderEmpty("Geen data gevonden. Voeg Meting, Frequency, DnT en/of Details toe.", contentNode);
+            this.renderEmpty(this.localize("UI_NoData"), contentNode);
             return;
         }
         if (table.columns.some((column) => !column.displayName?.trim())) {
-            this.renderEmpty("Ongeldige kolommetadata: minimaal één gekoppeld veld heeft geen weergavenaam.", contentNode);
+            this.renderEmpty(this.localize("UI_InvalidMetadata"), contentNode);
             return;
         }
 
         const roleIndexes = this.getRoleIndexes(table.columns);
         if (!roleIndexes) {
             this.renderEmpty(
-                "Verplichte velden ontbreken. Benodigde rollen: Meting, Frequency en minimaal DnT of één veld onder Details.",
+                this.localize("UI_MissingFields"),
                 contentNode
             );
             return;
@@ -342,7 +524,7 @@ export class Visual implements IVisual {
 
         const rows = this.parseRows(table, roleIndexes);
         if (rows.length === 0) {
-            this.renderEmpty("Geen geldige rijen om te tonen.", contentNode);
+            this.renderEmpty(this.localize("UI_NoValidRows"), contentNode);
             return;
         }
 
@@ -364,7 +546,7 @@ export class Visual implements IVisual {
 
         const metingResult = this.buildMetingViews(table, rows, rowDefinitions, labelColumnDefs, roleIndexes.meting);
         if (metingResult.conflictError) {
-            this.renderEmpty(`Inconsistente Meting-gegevens: ${metingResult.conflictError}`, contentNode);
+            this.renderEmpty(`${this.localize("UI_InconsistentMeasurements")}: ${metingResult.conflictError}`, contentNode);
             return;
         }
 
@@ -373,10 +555,10 @@ export class Visual implements IVisual {
             const sortIndex = this.sortLabelIndex;
             const direction = this.sortAscending ? 1 : -1;
             metingViews.sort((left, right) => direction * (left.labelParts[sortIndex]?.text || "")
-                .localeCompare(right.labelParts[sortIndex]?.text || "", "nl", { numeric: true, sensitivity: "base" }));
+                .localeCompare(right.labelParts[sortIndex]?.text || "", this.locale, { numeric: true, sensitivity: "base" }));
         }
         if (metingViews.length === 0) {
-            this.renderEmpty("Geen waarden gevonden in DnT/Details voor de geselecteerde data.", contentNode);
+            this.renderEmpty(this.localize("UI_NoValues"), contentNode);
             return;
         }
 
@@ -438,13 +620,13 @@ export class Visual implements IVisual {
                 } catch (error) {
                     const errorHint = document.createElement("div");
                     errorHint.className = "rlg-hint";
-                    errorHint.textContent = `Kon 'DnT per meting' niet weergeven: ${error instanceof Error ? error.message : String(error)}`;
+                    errorHint.textContent = `${this.localize("UI_TableRenderError")}: ${error instanceof Error ? error.message : String(error)}`;
                     contentNode.appendChild(errorHint);
                 }
             } else {
                 const hint = document.createElement("div");
                 hint.className = "rlg-hint";
-                hint.textContent = "Koppel het veld 'DnT' om de tabel 'DnT per meting' te tonen.";
+                hint.textContent = this.localize("UI_ConnectDnTForTable");
                 contentNode.appendChild(hint);
             }
         }
@@ -497,8 +679,8 @@ export class Visual implements IVisual {
         const settingsButton = document.createElement("button");
         settingsButton.className = "rlg-settings-button";
         settingsButton.type = "button";
-        settingsButton.title = "Instellingen";
-        settingsButton.setAttribute("aria-label", "Instellingen");
+        settingsButton.title = this.localize("UI_Settings");
+        settingsButton.setAttribute("aria-label", settingsButton.title);
         settingsButton.addEventListener("click", () => {
             this.settingsOpen = !this.settingsOpen;
             const existingPanel = footer.querySelector<HTMLElement>(".rlg-settings-panel");
@@ -557,19 +739,19 @@ export class Visual implements IVisual {
         panel.appendChild(this.renderSettingCheckbox(this.getTableVisibilityLabel(), this.showDnTOverview, (checked) => {
             this.setInstanceVisibility("showDnTOverview", checked);
         }));
-        panel.appendChild(this.renderSettingCheckbox("Rapporttabel tonen", this.showReportTable, (checked) => {
+        panel.appendChild(this.renderSettingCheckbox(this.localize("UI_ShowReportTable"), this.showReportTable, (checked) => {
             this.setInstanceVisibility("showReportTable", checked);
         }));
-        panel.appendChild(this.renderSettingCheckbox("Bovenvenster tonen", this.showTopPanel, (checked) => {
+        panel.appendChild(this.renderSettingCheckbox(this.localize("UI_ShowTopPanel"), this.showTopPanel, (checked) => {
             this.setInstanceVisibility("showTopPanel", checked);
         }));
-        panel.appendChild(this.renderSettingCheckbox("Grafiekvenster tonen", this.showGraphPlaceholder, (checked) => {
+        panel.appendChild(this.renderSettingCheckbox(this.localize("UI_ShowGraph"), this.showGraphPlaceholder, (checked) => {
             this.setInstanceVisibility("showGraphPlaceholder", checked);
         }));
-        panel.appendChild(this.renderSettingCheckbox("Instellingenvenster tonen", this.showGraphSettingsPanel, (checked) => {
+        panel.appendChild(this.renderSettingCheckbox(this.localize("UI_ShowSettingsPanel"), this.showGraphSettingsPanel, (checked) => {
             this.setInstanceVisibility("showGraphSettingsPanel", checked);
         }));
-        panel.appendChild(this.renderSettingCheckbox("Debugvenster tonen", this.debugTableVisible, (checked) => {
+        panel.appendChild(this.renderSettingCheckbox(this.localize("UI_ShowDebug"), this.debugTableVisible, (checked) => {
             this.setInstanceVisibility("debugTableVisible", checked);
         }));
 
@@ -586,7 +768,7 @@ export class Visual implements IVisual {
         if (this.showTopPanel) {
             const topPanel = document.createElement("aside");
             topPanel.className = "rlg-graph-top-panel";
-            topPanel.setAttribute("aria-label", "Extra venster");
+            topPanel.setAttribute("aria-label", this.localize("UI_AdditionalPanel"));
             topPanel.appendChild(this.renderTopMeasurementsTable(metingViews));
             graphContent.appendChild(topPanel);
         }
@@ -597,7 +779,7 @@ export class Visual implements IVisual {
         if (this.showReportTable) {
             const leftPanel = document.createElement("aside");
             leftPanel.className = "rlg-graph-left-panel";
-            leftPanel.setAttribute("aria-label", "Extra venster");
+            leftPanel.setAttribute("aria-label", this.localize("UI_AdditionalPanel"));
             const fixedReportWidth = this.getFourMeasurementReportWidth();
             leftPanel.style.width = `${fixedReportWidth}px`;
             leftPanel.style.minWidth = `${fixedReportWidth}px`;
@@ -605,7 +787,7 @@ export class Visual implements IVisual {
             if (metingViews.length > 4) {
                 const message = document.createElement("div");
                 message.className = "rlg-report-table-limit-message";
-                message.textContent = "Je kunt maximaal 4 metingen weergeven in rapportweergave";
+                message.textContent = this.localize("UI_MaxReportMeasurements");
                 leftPanel.appendChild(message);
             } else {
                 leftPanel.appendChild(this.renderReportTable(
@@ -655,7 +837,7 @@ export class Visual implements IVisual {
         const toelichtingVisible = this.visibleSingleValueRoles.has("info");
         const thead = document.createElement("thead");
         const headerRow = document.createElement("tr");
-        const topHeaders = ["Meting", "Omschrijving", ...(toelichtingVisible ? ["Toelichting"] : []), ...topDetailColumns.map(({ column }) => column.displayName)];
+        const topHeaders = [this.localize("Format_Measurement"), this.localize("Format_Description"), ...(toelichtingVisible ? [this.localize("Format_Explanation")] : []), ...topDetailColumns.map(({ column }) => column.displayName)];
         for (const [headerIndex, label] of topHeaders.entries()) {
             const header = document.createElement("th");
             header.className = `rlg-top-column-${headerIndex === 0 ? "measurement" : headerIndex === 1 ? "description" : headerIndex === 2 && toelichtingVisible ? "toelichting" : `detail${headerIndex - (toelichtingVisible ? 3 : 2)}`}`;
@@ -706,7 +888,7 @@ export class Visual implements IVisual {
         if (!dnTDefinition) {
             const empty = document.createElement("div");
             empty.className = "rlg-report-table-empty";
-            empty.textContent = "Geen DnT-gegevens beschikbaar.";
+            empty.textContent = this.localize("UI_NoDnTData");
             card.appendChild(empty);
             return card;
         }
@@ -874,14 +1056,14 @@ export class Visual implements IVisual {
         const toggleButton = document.createElement("button");
         toggleButton.type = "button";
         toggleButton.className = `rlg-graph-settings-toggle ${this.graphSettingsOpen ? "rlg-graph-settings-toggle-open" : ""}`;
-        toggleButton.title = this.graphSettingsOpen ? "Instellingen verbergen" : "Instellingen tonen";
+        toggleButton.title = this.localize(this.graphSettingsOpen ? "UI_HideSettings" : "UI_ShowSettings");
         toggleButton.setAttribute("aria-label", toggleButton.title);
         toggleButton.addEventListener("click", () => {
             this.graphSettingsOpen = !this.graphSettingsOpen;
             this.setInstanceVisibility("graphSettingsOpen", this.graphSettingsOpen);
             panel.classList.toggle("rlg-graph-settings-panel-open", this.graphSettingsOpen);
             toggleButton.classList.toggle("rlg-graph-settings-toggle-open", this.graphSettingsOpen);
-            toggleButton.title = this.graphSettingsOpen ? "Instellingen verbergen" : "Instellingen tonen";
+            toggleButton.title = this.localize(this.graphSettingsOpen ? "UI_HideSettings" : "UI_ShowSettings");
             toggleButton.setAttribute("aria-label", toggleButton.title);
             if (this.graphSettingsOpen) {
                 panel.querySelector(".rlg-graph-settings-collapsed-title")?.remove();
@@ -933,18 +1115,18 @@ export class Visual implements IVisual {
 
         const controls = document.createElement("div");
         controls.className = "rlg-graph-settings-controls";
-        controls.appendChild(this.renderSettingCheckbox("Rapportweergave", this.reportViewActive, (checked) => {
+        controls.appendChild(this.renderSettingCheckbox(this.localize("UI_ReportView"), this.reportViewActive, (checked) => {
             if (checked) this.setViewMode("report");
         }));
-        controls.appendChild(this.renderSettingCheckbox("Analyseweergave", this.analysisViewActive, (checked) => {
+        controls.appendChild(this.renderSettingCheckbox(this.localize("UI_AnalysisView"), this.analysisViewActive, (checked) => {
             if (checked) this.setViewMode("analysis");
         }));
         controls.appendChild(this.renderSettingSelect(
-            "Frequentiebereik",
+            this.localize("UI_FrequencyRange"),
             [
-                { value: "available", label: "Aanwezige frequenties" },
-                { value: "extended", label: "Eén frequentie extra" },
-                { value: "custom", label: "Zelf ingesteld bereik" }
+                { value: "available", label: this.localize("UI_AvailableFrequencies") },
+                { value: "extended", label: this.localize("UI_OneExtraFrequency") },
+                { value: "custom", label: this.localize("UI_CustomRange") }
             ],
             this.graphFrequencyMode,
             (value) => {
@@ -954,12 +1136,12 @@ export class Visual implements IVisual {
         ));
         if (this.graphFrequencyMode === "custom") {
             const frequencyOptions = GRAPH_FREQUENCIES.map((frequency) => ({ value: String(frequency), label: `${this.formatFrequency(frequency)} Hz` }));
-            controls.appendChild(this.renderSettingSelect("Beginfrequentie", frequencyOptions, String(this.graphFrequencyStart), (value) => {
+            controls.appendChild(this.renderSettingSelect(this.localize("UI_StartFrequency"), frequencyOptions, String(this.graphFrequencyStart), (value) => {
                 this.graphFrequencyStart = Number(value);
                 if (this.graphFrequencyStart > this.graphFrequencyEnd) this.graphFrequencyEnd = this.graphFrequencyStart;
                 this.persistVisualState({ graphFrequencyStart: this.graphFrequencyStart, graphFrequencyEnd: this.graphFrequencyEnd });
             }));
-            controls.appendChild(this.renderSettingSelect("Eindfrequentie", frequencyOptions, String(this.graphFrequencyEnd), (value) => {
+            controls.appendChild(this.renderSettingSelect(this.localize("UI_EndFrequency"), frequencyOptions, String(this.graphFrequencyEnd), (value) => {
                 this.graphFrequencyEnd = Number(value);
                 if (this.graphFrequencyEnd < this.graphFrequencyStart) this.graphFrequencyStart = this.graphFrequencyEnd;
                 this.persistVisualState({ graphFrequencyStart: this.graphFrequencyStart, graphFrequencyEnd: this.graphFrequencyEnd });
@@ -990,7 +1172,26 @@ export class Visual implements IVisual {
     private renderGraphSettingsDivider(body: HTMLElement, controls: HTMLElement): HTMLElement {
         const divider = document.createElement("div");
         divider.className = "rlg-graph-settings-divider";
-        divider.title = "Sleep om de hoogte van Instellingen en Measurement details aan te passen";
+        divider.title = this.localize("UI_DragSettings");
+        divider.tabIndex = 0;
+        divider.setAttribute("role", "separator");
+        divider.setAttribute("aria-orientation", "horizontal");
+        divider.addEventListener("keydown", (event: KeyboardEvent) => {
+            if (event.key !== "ArrowUp" && event.key !== "ArrowDown") {
+                return;
+            }
+            event.preventDefault();
+            const direction = event.key === "ArrowDown" ? 1 : -1;
+            const bodyHeight = Math.max(121, body.clientHeight - divider.offsetHeight);
+            const currentHeight = controls.getBoundingClientRect().height;
+            const nextHeight = Math.max(40, Math.min(bodyHeight - 80, currentHeight + direction * (event.shiftKey ? 40 : 10)));
+            this.graphSettingsSplitRatio = nextHeight / bodyHeight;
+            controls.style.flex = `0 0 ${nextHeight}px`;
+            const details = body.querySelector<HTMLElement>(".rlg-measurement-details-section");
+            if (details) {
+                details.style.flex = `0 0 ${bodyHeight - nextHeight}px`;
+            }
+        });
         controls.style.flex = `0 0 ${this.graphSettingsSplitRatio * 100}%`;
         divider.addEventListener("mousedown", (event: MouseEvent) => {
             event.preventDefault();
@@ -1034,7 +1235,7 @@ export class Visual implements IVisual {
         if (this.measurementDetailColumns.length === 0) {
             const empty = document.createElement("div");
             empty.className = "rlg-measurement-details-empty";
-            empty.textContent = "Voeg velden toe aan Extra measurement details of Rapport details.";
+            empty.textContent = this.localize("UI_EmptyDetails");
             container.appendChild(empty);
             return container;
         }
@@ -1045,7 +1246,7 @@ export class Visual implements IVisual {
         const headerRow = document.createElement("tr");
 
         const descriptionHeader = document.createElement("th");
-        this.appendHtmlRichText(descriptionHeader, "Omschrijving");
+        this.appendHtmlRichText(descriptionHeader, this.localize("Format_Description"));
         this.applyExtraDataColumnStyle(descriptionHeader, this.formattingSettings.extraDataHeadersCard.getStyle("description"));
         headerRow.appendChild(descriptionHeader);
         for (const [index, column] of this.measurementDetailColumns.entries()) {
@@ -1103,14 +1304,14 @@ export class Visual implements IVisual {
             return value;
         }
         const decimals = Math.max(0, Math.min(6, Math.round(settings.decimals.value)));
-        return numeric.toLocaleString("nl-NL", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+        return numeric.toLocaleString(this.locale, { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
     }
 
     private getTableVisibilityLabel(): string {
         const title = this.formattingSettings.tableTitleStyleCard.titleText.value
             .replace(/<\/?(?:sub|sup)>/gi, "")
             .trim();
-        return `Tabel '${title}' tonen`;
+        return this.localize("UI_ShowTable").replace("{0}", title);
     }
 
     private getPersistedVisibility(dataView: DataView | undefined): {
@@ -1237,13 +1438,13 @@ export class Visual implements IVisual {
         panel.style.setProperty("--rlg-graph-padding-bottom", `${graphPadding.bottomPadding.value}px`);
         panel.style.setProperty("--rlg-graph-padding-left", `${graphPadding.leftPadding.value}px`);
         if (!dnTDefinition) {
-            panel.textContent = "Koppel het veld 'DnT' om de grafiek te tonen.";
+            panel.textContent = this.localize("UI_ConnectDnTForGraph");
             return panel;
         }
 
         const sourceSeries = this.buildGraphSeries(metingViews, dnTDefinition);
         if (sourceSeries.length === 0) {
-            panel.textContent = "Geen geldige DnT-waarden om weer te geven.";
+            panel.textContent = this.localize("UI_NoValidDnT");
             return panel;
         }
 
@@ -1256,7 +1457,7 @@ export class Visual implements IVisual {
             .map((item) => ({ ...item, points: item.points.filter((point) => point.hz >= rangeStart && point.hz <= rangeEnd) }))
             .filter((item) => item.points.length > 0);
         if (series.length === 0) {
-            panel.textContent = "Geen DnT-waarden binnen het gekozen frequentiebereik.";
+            panel.textContent = this.localize("UI_NoDnTInRange");
             return panel;
         }
         const values = series.flatMap((item) => item.points.map((point) => point.value));
@@ -1351,15 +1552,25 @@ export class Visual implements IVisual {
 
         const unselectedStyle = this.formattingSettings.graphUnselectedCard;
         const selectedStyle = this.formattingSettings.graphSelectedCard;
-        for (const item of series) {
+        const highContrastDashPatterns = ["none", "8 3", "2 3", "10 3 2 3", "1 3", "6 2 2 2"];
+        for (const [seriesIndex, item] of series.entries()) {
             const selected = this.selectedGraphSeries.has(item.key);
             const hasSelection = this.selectedGraphSeries.size > 0;
             const opacity = hasSelection && !selected ? Math.max(0, Math.min(1, selectedStyle.dimmedOpacity.value)) : 0.7;
             const path = item.points.map((point, index) => `${index === 0 ? "M" : "L"}${x(point.hz)},${y(point.value)}`).join(" ");
             const hit = this.appendSvg(svg, "path", { d: path, fill: "none", stroke: item.color, "stroke-width": 10, "stroke-opacity": 0.01, cursor: "pointer" });
+            hit.setAttribute("tabindex", "0");
+            hit.setAttribute("role", "button");
+            hit.setAttribute("aria-label", `${this.localize("UI_SelectMeasurement")}: ${item.label}`);
+            hit.setAttribute("aria-pressed", String(selected));
             this.bindContextMenu(hit, item.selectionId);
             hit.addEventListener("click", (event: MouseEvent) => this.toggleGraphSeries(item.key, item.selectionId, event.ctrlKey));
+            this.bindKeyboardActivation(hit as unknown as HTMLElement, (event) => this.toggleGraphSeries(item.key, item.selectionId, event.ctrlKey));
             const line = this.appendSvg(svg, "path", { d: path, fill: "none", stroke: item.color, "stroke-width": selected ? selectedStyle.selectedLineWidth.value : unselectedStyle.lineWidth.value, "stroke-opacity": opacity });
+            line.setAttribute("data-series-index", String(seriesIndex));
+            if (this.host.colorPalette.isHighContrast) {
+                line.setAttribute("stroke-dasharray", highContrastDashPatterns[seriesIndex % highContrastDashPatterns.length]);
+            }
             this.bindContextMenu(line, item.selectionId);
             for (const point of item.points) {
                 const circle = this.appendSvg(svg, "circle", { cx: x(point.hz), cy: y(point.value), r: Math.sqrt((selected ? selectedStyle.selectedPointSize.value : unselectedStyle.pointSize.value) / Math.PI), fill: item.color, "fill-opacity": opacity, cursor: "pointer" });
@@ -1371,9 +1582,9 @@ export class Visual implements IVisual {
                         isTouchEvent: false,
                         identities: [item.selectionId],
                         dataItems: [
-                            { displayName: "Meting", value: item.label, color: item.color },
-                            { displayName: "Frequentie", value: `${this.formatFrequency(point.hz)} Hz` },
-                            { displayName: "DnT", value: point.value.toFixed(2).replace(".", ",") }
+                            { displayName: this.localize("UI_Measurement"), value: item.label, color: item.color },
+                            { displayName: this.localize("UI_Frequency"), value: `${this.formatFrequency(point.hz)} Hz` },
+                            { displayName: this.localize("UI_DnT"), value: point.value.toLocaleString(this.locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }
                         ]
                     });
                 });
@@ -1654,7 +1865,18 @@ export class Visual implements IVisual {
     ): HTMLElement {
         const divider = document.createElement("div");
         divider.className = "rlg-pane-divider";
-        divider.title = "Sleep om de vensterhoogte aan te passen. Dubbelklik tussen grafiek en tabel voor automatische tabelhoogte.";
+        divider.title = this.localize("UI_DragPane");
+        divider.tabIndex = 0;
+        divider.setAttribute("role", "separator");
+        divider.setAttribute("aria-orientation", "horizontal");
+        divider.addEventListener("keydown", (event: KeyboardEvent) => {
+            if (event.key !== "ArrowUp" && event.key !== "ArrowDown") {
+                return;
+            }
+            event.preventDefault();
+            const direction = event.key === "ArrowDown" ? 1 : -1;
+            this.resizePanesByKeyboard(upperPane, lowerPane, direction * (event.shiftKey ? 40 : 10));
+        });
         if (upperPane.key === "graph" && lowerPane.key === "table") {
             divider.addEventListener("dblclick", () => {
                 this.fitTablePaneToMeasurements(divider);
@@ -1715,6 +1937,31 @@ export class Visual implements IVisual {
             document.addEventListener("mouseup", onMouseUp);
         });
         return divider;
+    }
+
+    private resizePanesByKeyboard(
+        upperPane: { key: string; defaultHeight: number },
+        lowerPane: { key: string; defaultHeight: number },
+        delta: number
+    ): void {
+        const upperHeight = this.getPaneHeight(upperPane.key, upperPane.defaultHeight);
+        const lowerHeight = this.getPaneHeight(lowerPane.key, lowerPane.defaultHeight);
+        if (upperPane.key === "graph") {
+            const maximumLowerHeight = lowerHeight + Math.max(0, this.getRenderedPaneHeight("graph", upperHeight) - this.getMinimumPaneHeight("graph"));
+            this.setResizablePaneHeight(lowerPane.key, Math.max(this.getMinimumPaneHeight(lowerPane.key), Math.min(maximumLowerHeight, lowerHeight - delta)));
+            return;
+        }
+        if (lowerPane.key === "graph") {
+            const maximumUpperHeight = upperHeight + Math.max(0, this.getRenderedPaneHeight("graph", lowerHeight) - this.getMinimumPaneHeight("graph"));
+            this.setResizablePaneHeight(upperPane.key, Math.max(this.getMinimumPaneHeight(upperPane.key), Math.min(maximumUpperHeight, upperHeight + delta)));
+            return;
+        }
+        const boundedDelta = Math.max(
+            this.getMinimumPaneHeight(upperPane.key) - upperHeight,
+            Math.min(lowerHeight - this.getMinimumPaneHeight(lowerPane.key), delta)
+        );
+        this.setResizablePaneHeight(upperPane.key, upperHeight + boundedDelta);
+        this.setResizablePaneHeight(lowerPane.key, lowerHeight - boundedDelta);
     }
 
     private getRenderedPaneHeight(key: string, fallbackHeight: number): number {
@@ -1889,6 +2136,7 @@ export class Visual implements IVisual {
     }
 
     public getFormattingModel(): powerbi.visuals.FormattingModel {
+        this.localizeFormattingLabels();
         return this.formattingSettingsService.buildFormattingModel(this.formattingSettings);
     }
 
@@ -2020,7 +2268,7 @@ export class Visual implements IVisual {
         if (!Number.isFinite(numeric)) {
             return value;
         }
-        return numeric.toLocaleString("nl-NL", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+        return numeric.toLocaleString(this.locale, { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
     }
 
     private colorWithTransparency(color: string, transparency: number): string {
@@ -2047,12 +2295,12 @@ export class Visual implements IVisual {
 
         const title = document.createElement("div");
         title.className = "rlg-table-card-title rlg-window-title";
-        title.textContent = "Debugtabel (ruwe data)";
+        title.textContent = this.localize("UI_DebugTable");
         card.appendChild(title);
 
         const meta = document.createElement("div");
         meta.className = "rlg-debug-meta";
-        meta.textContent = `Kolommen: ${table.columns.length} · Rijen: ${rows.length}`;
+        meta.textContent = this.localize("UI_ColumnsRows").replace("{0}", String(table.columns.length)).replace("{1}", String(rows.length));
         card.appendChild(meta);
 
         const wrap = document.createElement("div");
@@ -2069,7 +2317,7 @@ export class Visual implements IVisual {
         for (const column of table.columns) {
             const th = document.createElement("th");
             const roleNames = Object.keys(column.roles || {}).join(", ") || "-";
-            th.textContent = `${column.displayName || column.queryName || "(onbekend)"} [rol: ${roleNames}, index: ${column.index ?? "-"}]`;
+            th.textContent = `${column.displayName || column.queryName || this.localize("UI_Unknown")} [${this.localize("UI_Role")}: ${roleNames}, ${this.localize("UI_Index")}: ${column.index ?? "-"}]`;
             headRow.appendChild(th);
         }
         thead.appendChild(headRow);
@@ -2119,8 +2367,8 @@ export class Visual implements IVisual {
         collapseDetailsButton.className = "rlg-table-collapse-details-button";
         collapseDetailsButton.type = "button";
         collapseDetailsButton.textContent = "-";
-        collapseDetailsButton.title = "Alle details sluiten en tabel inklappen";
-        collapseDetailsButton.setAttribute("aria-label", "Alle details sluiten en tabel inklappen");
+        collapseDetailsButton.title = this.localize("UI_CloseAllDetails");
+        collapseDetailsButton.setAttribute("aria-label", collapseDetailsButton.title);
         title.appendChild(collapseDetailsButton);
         card.appendChild(title);
 
@@ -2168,8 +2416,11 @@ export class Visual implements IVisual {
             th.dataset.frozenColumnIndex = String(index);
             th.rowSpan = 2;
             th.classList.add("rlg-sortable-col");
-            th.title = "Klik om te sorteren";
-            th.addEventListener("click", () => {
+            th.tabIndex = 0;
+            th.title = this.localize("UI_SortColumn");
+            th.setAttribute("aria-label", `${this.localize("UI_SortColumn")}: ${labelColumn.header}`);
+            th.setAttribute("aria-sort", this.sortLabelIndex !== index ? "none" : this.sortAscending ? "ascending" : "descending");
+            const sortColumn = (): void => {
                 if (this.sortLabelIndex !== index) {
                     this.sortLabelIndex = index;
                     this.sortAscending = true;
@@ -2179,7 +2430,9 @@ export class Visual implements IVisual {
                     this.sortLabelIndex = null;
                 }
                 this.requestRerender();
-            });
+            };
+            th.addEventListener("click", sortColumn);
+            this.bindKeyboardActivation(th, sortColumn);
             this.appendHtmlRichText(
                 th,
                 this.getConfiguredColumnName(this.getLabelColumnStyleKey(labelColumn.header, index), labelColumn.header)
@@ -2242,10 +2495,14 @@ export class Visual implements IVisual {
             summaryRow.className = this.selectedGraphSeries.has(metingView.metingKey)
                 ? "rlg-summary-row rlg-summary-row-selected"
                 : "rlg-summary-row";
+            summaryRow.tabIndex = 0;
+            summaryRow.setAttribute("aria-selected", String(this.selectedGraphSeries.has(metingView.metingKey)));
+            summaryRow.setAttribute("aria-label", `${this.localize("UI_SelectMeasurement")}: ${metingView.labelParts.map((part) => part.text).join(", ")}`);
             this.bindContextMenu(summaryRow, metingView.selectionId);
             summaryRow.addEventListener("click", (event: MouseEvent) => {
                 this.toggleGraphSeries(metingView.metingKey, metingView.selectionId, event.ctrlKey);
             });
+            this.bindKeyboardActivation(summaryRow, (event) => this.toggleGraphSeries(metingView.metingKey, metingView.selectionId, event.ctrlKey));
             const toggleHandler = (): void => {
                 if (this.expandedMetingKeys.has(metingView.metingKey)) {
                     this.expandedMetingKeys.delete(metingView.metingKey);
@@ -2279,10 +2536,18 @@ export class Visual implements IVisual {
             const toggleCell = document.createElement("td");
             toggleCell.className = "rlg-row-key rlg-expand-col rlg-col-info rlg-frozen-col";
             toggleCell.dataset.frozenColumnIndex = String(labelColumns.length);
-            toggleCell.addEventListener("click", (event: MouseEvent) => {
+            const toggle = document.createElement("button");
+            toggle.type = "button";
+            toggle.className = isExpanded ? "rlg-expand-icon rlg-expand-icon-active" : "rlg-expand-icon";
+            toggle.textContent = "i";
+            toggle.title = isExpanded ? this.localize("UI_HideDetails") : this.localize("UI_ShowDetails");
+            toggle.setAttribute("aria-label", `${toggle.title}: ${metingView.labelParts.map((part) => part.text).join(", ")}`);
+            toggle.setAttribute("aria-expanded", String(isExpanded));
+            toggle.addEventListener("click", (event: MouseEvent) => {
                 event.stopPropagation();
                 toggleHandler();
             });
+            toggleCell.appendChild(toggle);
 
             if (metingView.warnings.length > 0) {
                 const warningIcon = document.createElement("span");
@@ -2292,11 +2557,6 @@ export class Visual implements IVisual {
                 toggleCell.appendChild(warningIcon);
             }
 
-            const toggle = document.createElement("span");
-            toggle.className = isExpanded ? "rlg-expand-icon rlg-expand-icon-active" : "rlg-expand-icon";
-            toggle.textContent = "i";
-            toggle.title = isExpanded ? "Details verbergen" : "Details tonen";
-            toggleCell.appendChild(toggle);
             summaryRow.appendChild(toggleCell);
 
             for (const [singleValueIndex, singleValueColumn] of singleValueColumns.entries()) {
@@ -2417,7 +2677,7 @@ export class Visual implements IVisual {
             const isContentOverflowing = heightDifference > 0;
             heightButton.classList.toggle("rlg-table-height-button-expand", isContentOverflowing);
             heightButton.classList.toggle("rlg-table-height-button-collapse", !isContentOverflowing);
-            heightButton.title = isContentOverflowing ? "Tabel vergroten tot alle rijen zichtbaar zijn" : "Tabel inklappen tot de inhoud";
+            heightButton.title = this.localize(isContentOverflowing ? "UI_ExpandTable" : "UI_CollapseTable");
             heightButton.setAttribute("aria-label", heightButton.title);
         }
         collapseDetailsButton.hidden = table.querySelector("tbody > tr.rlg-detail-row") === null;
